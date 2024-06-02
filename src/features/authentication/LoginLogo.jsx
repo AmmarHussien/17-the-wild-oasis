@@ -34,7 +34,7 @@ function LoginLogo() {
     <Box>
       <StyledFormRow>
         <Image src="public/logo-dark.png" alt="" />
-        <Heading as="LoginPageHeader">Welcom To Route Admin Panel</Heading>
+        <Heading as="loginPageHeader">Welcom To Route Admin Panel</Heading>
         <Heading as="h4">
           Login now to manage you account and check your pending request
         </Heading>

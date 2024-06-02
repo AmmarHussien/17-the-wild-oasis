@@ -1,53 +1,33 @@
 import {
   HiOutlineBanknotes,
-  HiOutlineBriefcase,
   HiOutlineCalendarDays,
-  HiOutlineChartBar,
+  HiUsers,
 } from "react-icons/hi2";
 import Stat from "./Stat";
-import { formatCurrency } from "../../utils/helpers";
 
-function Stats({ bookings, confirmedStays, numDays, cabinCount }) {
-  // 1.
-  const numBookings = bookings.length;
-
-  // 2.
-  const sales = bookings.reduce((acc, cur) => acc + cur.totalPrice, 0);
-
-  // 3.
-  const checkin = confirmedStays.length;
-
-  // 4.
-  const occupation =
-    confirmedStays.reduce((acc, cur) => acc + cur.numNights, 0) /
-    (numDays * cabinCount);
-  // num checked in nights / all available nights (number of days * num of cabins)
-
+function Stats({ totalUser, totalDrivers, totalVehicles }) {
   return (
     <>
       <Stat
-        title="Bookings"
-        color="blue"
-        icon={<HiOutlineBriefcase />}
-        value={numBookings}
+        backgroundColor="#A855F7"
+        title="Total Users"
+        colorIconBackground="#D9B7F9"
+        icon={<HiUsers />}
+        value={totalUser}
       />
       <Stat
-        title="Sales"
-        color="green"
+        title="Total Drivers"
+        backgroundColor="#EC4899"
+        colorIconBackground="#F8B0D4"
         icon={<HiOutlineBanknotes />}
-        value={formatCurrency(sales)}
+        value={totalDrivers}
       />
       <Stat
-        title="Check-in"
-        color="indigo"
+        title="Total Vehicles"
+        backgroundColor="#F97316"
+        colorIconBackground="#FAB98C"
         icon={<HiOutlineCalendarDays />}
-        value={checkin}
-      />
-      <Stat
-        title="Occupancy Rate"
-        color="yellow"
-        icon={<HiOutlineChartBar />}
-        value={Math.round(occupation * 100) + "%"}
+        value={totalVehicles}
       />
     </>
   );

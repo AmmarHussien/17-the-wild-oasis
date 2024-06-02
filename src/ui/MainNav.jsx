@@ -60,31 +60,79 @@ function MainNav() {
         <li>
           <StyledNavLink to="/dashboard">
             <HiOutlineHome />
-            <span>Home</span>
+            <span>Dashboard</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/bookings">
             <HiOutlineCalendarDays />
-            <span>Bookings</span>
+            <span>Car Services</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/cabins">
-            <HiOutlineHomeModern />
-            <span>Cabins</span>
-          </StyledNavLink>
-        </li>
-        <li>
-          <StyledNavLink to="/users">
             <HiOutlineUsers />
             <span>Users</span>
           </StyledNavLink>
         </li>
         <li>
+          <StyledNavLink to="/users">
+            <HiOutlineUsers />
+            <span>Drivers</span>
+          </StyledNavLink>
+        </li>
+        <li>
           <StyledNavLink to="/Settings">
             <HiOutlineCog6Tooth />
-            <span>Settings</span>
+            <span>Rides</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/Settings">
+            <HiOutlineCog6Tooth />
+            <span>Vehicles</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/Settings">
+            <HiOutlineCog6Tooth />
+            <span>Logistic</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/Settings">
+            <HiOutlineCog6Tooth />
+            <span>Profit</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/Settings">
+            <HiOutlineCog6Tooth />
+            <span>Documents</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/Settings">
+            <HiOutlineCog6Tooth />
+            <span>Push Notification</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/Settings">
+            <HiOutlineCog6Tooth />
+            <span>Rating</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/Settings">
+            <HiOutlineCog6Tooth />
+            <span>Promos</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="/Settings">
+            <HiOutlineCog6Tooth />
+            <span>Customisation</span>
           </StyledNavLink>
         </li>
       </NavList>

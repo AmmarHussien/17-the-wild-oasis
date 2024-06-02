@@ -5,14 +5,22 @@ import { useRecentStays } from "./useRecentStays";
 import Stats from "./stats";
 import useCabins from "../cabins/useCabins";
 import SalesChart from "./SalesChart";
-import DurationChart from "./DurationChart";
-import TodayActivity from "../check-in-out/TodayActivity";
+
+import RidesStatistics from "./Statistics";
+import RecentRide from "./RecentRide";
 
 const StyledDashboardLayout = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: row;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto 34rem auto;
   gap: 2.4rem;
+`;
+
+const SmallContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 `;
 
 function DashboardLayout() {
@@ -29,20 +37,19 @@ function DashboardLayout() {
     return <Spinner />;
 
   return (
-    <StyledDashboardLayout>
-      <Stats
-        bookings={bookings}
-        confirmedStays={confirmedStays}
-        numDays={numDays}
-        cabinCount={cabins.length}
-      />
+    <>
+      <StyledDashboardLayout>
+        <Stats totalUser="1000" totalDrivers="150" totalVehicles="150" />
 
-      <TodayActivity />
-
-      <DurationChart confirmedStays={confirmedStays} />
-
-      <SalesChart bookings={bookings} numDays={numDays} />
-    </StyledDashboardLayout>
+        {/* <TodayActivity />
+          <DurationChart confirmedStays={confirmedStays} /> */}
+      </StyledDashboardLayout>
+      <SmallContainer>
+        <SalesChart bookings={bookings} numDays={numDays} />
+        <RidesStatistics />
+      </SmallContainer>
+      <RecentRide />
+    </>
   );
 }
 

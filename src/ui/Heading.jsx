@@ -31,7 +31,7 @@ const Heading = styled.h1`
       text-align: center;
     `}
     ${(props) =>
-    props.as === "LoginPageHeader" &&
+    props.as === "loginPageHeader" &&
     css`
       font-size: 33px;
       font-weight: 700;
@@ -40,7 +40,7 @@ const Heading = styled.h1`
       line-height: 40px;
     `}
     ${(props) =>
-    props.as === "LoginPageSlogan" &&
+    props.as === "loginPageSlogan" &&
     css`
       font-size: 16px;
       font-weight: 400;
@@ -48,6 +48,54 @@ const Heading = styled.h1`
       color: #72788b;
       line-height: 24px;
     `}
+    ${(props) =>
+    props.as === "textSmall" &&
+    css`
+      font-size: 12px;
+      font-weight: 400;
+      color: #72788b;
+      line-height: 16px;
+    `}
+    ${(props) =>
+    props.as === "textLarge" &&
+    css`
+      font-size: 15px;
+      font-weight: 700;
+      color: #272424;
+      line-height: 21px;
+    `}
+
+    ${(props) =>
+    props.as === "chartTextMonth" &&
+    css`
+      font-family: Noto Sans Display;
+      font-size: 20.57px;
+      font-weight: 700;
+      line-height: 28.8px;
+      text-align: right;
+    `}
+
+    ${(props) =>
+    props.as === "statisticsItemText" &&
+    css`
+      //styleName: Body/Body Bold;
+      font-family: Noto Sans Display;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 21px;
+      text-align: center;
+    `}
+    ${(props) =>
+    props.as === "statisticsItemNum" &&
+    css`
+      font-family: Noto Sans Display;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 24px;
+      text-align: left;
+    `}
+  
+
 
   line-height: 1.4
 `;
