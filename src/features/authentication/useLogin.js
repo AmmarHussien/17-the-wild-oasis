@@ -9,20 +9,25 @@ export function useLogin() {
   const navigate = useNavigate();
 
   const { mutate: login, isLoading } = useMutation({
-    mutationFn: ({ email, password }) => loginApi({ email, password }),
+    mutationFn: ({ phone, password }) => loginApi({ phone, password }),
 
-    onSuccess: (user) => {
+    onSuccess: (response) => {
+      if (!response) {
+        console.error("Login response is undefined");
+        return;
+      }
       toast.success("Login Successfully");
-
-      queryClient.setQueryData(["user"], user.user);
-
       navigate("/dashboard", {
         replace: true,
       });
+      console.log("Login successful:", response);
+
+      queryClient.setQueryData(["user"], response);
     },
 
     onError: (err) => {
       toast.error("Provided email or password are incorrect");
+      console.error("Login failed:", err);
     },
   });
 

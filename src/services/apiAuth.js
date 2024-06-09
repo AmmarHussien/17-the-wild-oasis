@@ -1,3 +1,4 @@
+import axios from "axios";
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function signup({ fullName, email, password }) {
@@ -17,15 +18,35 @@ export async function signup({ fullName, email, password }) {
   return data;
 }
 
-export async function login({ email, password }) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+export async function login({ phone, password }) {
+  try {
+    const response = await axios.post(
+      "https://route-service.app/user-api/v1/login",
+      {
+        country_code: "02",
+        phone,
+        password,
+        device_token:
+          "cakDRZeZDjs:APA91bFhznZOVm1pvAWDPHpvWJyWY6ue8C5hX1wLX95ZQDHdnjv1kD47hHMK3QRIipV4FpMsA2FlyDG9FjEx4OXdI17LJIXrVFtwjgo3cC_EKBcS2Mg0MoKrEHDTcRh5XDs1lDez19Mp",
+      }
+    );
 
-  if (error) throw new Error(error.message);
+    if (response && response.data) {
+      // Assuming the response contains a token
+      const { access_token } = response.data.data;
+      localStorage.setItem("authToken", access_token);
 
-  return data;
+      // Redirect or update UI as needed
+
+      return response.data;
+    } else {
+      throw new Error("Login failed: No response data");
+    }
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Login failed due to an unexpected error"
+    );
+  }
 }
 
 export async function getCurrentUser() {

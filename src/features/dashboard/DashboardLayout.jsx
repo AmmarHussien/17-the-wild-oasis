@@ -7,7 +7,7 @@ import useCabins from "../cabins/useCabins";
 import SalesChart from "./SalesChart";
 
 import RidesStatistics from "./Statistics";
-import RecentRide from "./RecentRide";
+import RecentRide from "./ResentRide.jsx/RecentRide";
 
 const StyledDashboardLayout = styled.div`
   display: flex;

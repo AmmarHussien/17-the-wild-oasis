@@ -8,7 +8,6 @@ import TextField from "@mui/material/TextField";
 import { IconButton, InputAdornment } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { grey } from "@mui/material/colors";
 import Checkbox from "../../ui/Checkbox";
 import styled from "styled-components";
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
@@ -50,28 +49,27 @@ const Button = styled.button`
 `;
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!email || !password) return;
+    if (!phone || !password) return;
 
     login(
-      { email, password },
+      { phone, password },
       {
         onSettled: () => {
-          setEmail("");
+          setPhone("");
           setPassword("");
         },
       }
     );
   }
-
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleClick = () => {
     setShowPassword((prev) => !prev);
@@ -82,13 +80,13 @@ function LoginForm() {
       <Heading as="h3">Please Login To Your Account</Heading>
       <FormRowVertical label="">
         <TextField
-          type="email"
-          id="email"
+          type="number"
+          id="phone"
           // This makes this form better for password managers
-          autoComplete="username"
-          placeholder="User Name"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          autoComplete="phone"
+          placeholder="Phone Number"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
           disabled={isLoading}
           sx={{
             backgroundColor: "rgb(247, 248, 250)",

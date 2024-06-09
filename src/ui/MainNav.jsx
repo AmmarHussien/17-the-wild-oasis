@@ -4,7 +4,6 @@ import {
   HiOutlineCalendarDays,
   HiOutlineCog6Tooth,
   HiOutlineHome,
-  HiOutlineHomeModern,
   HiOutlineUsers,
 } from "react-icons/hi2";
 
@@ -64,73 +63,73 @@ function MainNav() {
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/bookings">
+          <StyledNavLink to="/car-services">
             <HiOutlineCalendarDays />
             <span>Car Services</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/cabins">
+          <StyledNavLink to="/users">
             <HiOutlineUsers />
             <span>Users</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/users">
+          <StyledNavLink to="/drivers">
             <HiOutlineUsers />
             <span>Drivers</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/Settings">
+          <StyledNavLink to="/rides">
             <HiOutlineCog6Tooth />
             <span>Rides</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/Settings">
+          <StyledNavLink to="/vehicles">
             <HiOutlineCog6Tooth />
             <span>Vehicles</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/Settings">
+          <StyledNavLink to="/logistic">
             <HiOutlineCog6Tooth />
             <span>Logistic</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/Settings">
+          <StyledNavLink to="/profit">
             <HiOutlineCog6Tooth />
             <span>Profit</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/Settings">
+          <StyledNavLink to="/documents">
             <HiOutlineCog6Tooth />
             <span>Documents</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/Settings">
+          <StyledNavLink to="/push-notification">
             <HiOutlineCog6Tooth />
             <span>Push Notification</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/Settings">
+          <StyledNavLink to="/rating">
             <HiOutlineCog6Tooth />
             <span>Rating</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/Settings">
+          <StyledNavLink to="/promos">
             <HiOutlineCog6Tooth />
             <span>Promos</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/Settings">
+          <StyledNavLink to="/customisation">
             <HiOutlineCog6Tooth />
             <span>Customisation</span>
           </StyledNavLink>

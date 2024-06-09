@@ -6,23 +6,6 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Box = styled.div`
-  /* Box */
-  //background-color: var(--color-grey-0);
-  //border: 1px solid var(--color-grey-100);
-  //border-radius: var(--border-radius-md);
-  //padding: 2.4rem 4rem;
-  width: 542px;
-  height: 553px;
-
-  border-radius: 14px;
-  padding: 25px 0px;
-
-  //gap: 10px;
-  //flex: 1;
-  background: white;
-`;
-
 const LoginLayoutLeft = styled.main`
   flex: 1;
   display: grid;

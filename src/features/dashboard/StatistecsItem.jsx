@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Heading from "../../ui/Heading";
 
 const StyledItem = styled.div`
   display: flex;

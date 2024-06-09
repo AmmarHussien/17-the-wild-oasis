@@ -67,6 +67,7 @@ const Empty = styled.p`
 `;
 
 const StyledNav = styled.div`
+  padding-left: 20px;
   height: 56px;
   gap: 10px;
   border-radius: 0px 0px 16px 16px;
@@ -112,11 +113,11 @@ function Table({ columns, children }) {
   );
 }
 
-function TableNav() {
+function TableNav({ title }) {
   return (
     <StyledNav>
       <StyledNavDiv>
-        <Heading as="textLarge">Recent Rides</Heading>
+        <Heading as="textLarge">{title}</Heading>
       </StyledNavDiv>
       <StyledNavDiv>
         <TextField
@@ -179,7 +180,7 @@ function Row({ children }) {
   const { columns } = useContext(TableContext);
   return (
     <StyledRow role="row" columns={columns}>
-      {children}{" "}
+      {children}
     </StyledRow>
   );
 }

@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import Logout from "../features/authentication/Logout";
-import { HiOutlineUser } from "react-icons/hi";
+
+import { IoMdNotificationsOutline } from "react-icons/io";
+
 import ButtonIcon from "./ButtonIcon";
 import { useNavigate } from "react-router-dom";
-import DarkModeToggle from "./DarkModeToggle";
 
 const StyledHeaderMenu = styled.ul`
   display: flex;
@@ -15,14 +16,20 @@ function HeaderMenu() {
 
   return (
     <StyledHeaderMenu>
-      <li>
-        <ButtonIcon onClick={() => navigate("/account")}>
+      {/* <li>
+        <ButtonIcon onClick={() => navigate("")}>
           <HiOutlineUser />
         </ButtonIcon>
       </li>
 
       <li>
         <DarkModeToggle />
+      </li> */}
+
+      <li>
+        <ButtonIcon onClick={() => navigate("")}>
+          <IoMdNotificationsOutline />
+        </ButtonIcon>
       </li>
 
       <li>

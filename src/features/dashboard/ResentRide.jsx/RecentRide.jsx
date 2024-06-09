@@ -1,12 +1,12 @@
-import Menus from "../../ui/Menus";
-import Table from "../../ui/Table";
-import Pagination from "../../ui/Pagination";
+import Menus from "../../../ui/Menus";
+import Table from "../../../ui/Table";
+import Pagination from "../../../ui/Pagination";
 
 function RecentRide() {
   return (
     <Menus>
       <Table columns="1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr 1fr">
-        <Table.TableNav />
+        <Table.TableNav title="Recent Ride" />
         <Table.Header>
           <div>Ride Id</div>
           <div>Rider Name</div>
