@@ -2,9 +2,8 @@ import { Button } from "@mui/material";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import ButtonText from "../../ui/ButtonText";
 import styled, { css } from "styled-components";
-import Heading from "../../ui/Heading";
-import InformationItemRow from "./InformationItemRow";
 import { useNavigate } from "react-router-dom";
+import InformationItemTable from "./InformationItemTable";
 
 const Row = styled.div`
   display: flex;
@@ -26,21 +25,24 @@ const Row = styled.div`
     `}
 `;
 
-const fakeData = [
-  {
-    id: 1,
-    userName: "John Doe",
-    carModel: "Toyota Camry",
-    plateNumber: "ABC-1234",
-    requestData: "2024-05-01",
-    phoneNumber: "123-456-7890",
-    licenseExpiryDate: "2026-05-01",
-  },
-];
+const userData = {
+  userName: "John Doe",
+  carModel: "Toyota Camry",
+  palletNumber: "ABC-1234",
+  licenseExpiryDate: "2026-05-01",
+  phoneNumber: "123-456-7890",
+  requestDate: "2024-05-01",
+};
+
+const issueData = {
+  issueDetails:
+    "I have an issue that the car is not moving  and i tried to do all the check ups but nothing worked",
+};
 
 function ServiceInformation() {
   const moveBack = useMoveBack();
   const navigete = useNavigate();
+
   return (
     <>
       <Row type="horizontal">
@@ -82,6 +84,10 @@ function ServiceInformation() {
               color: "#005379",
               background: "#EFF6FF",
               shadow: "0 4 60 0 #0038FF26",
+              "&:hover": {
+                background: "#EFF6FF",
+                boxShadow: "0 4px 60px 0 #0038FF26",
+              },
             }}
           >
             Cancel Request
@@ -90,38 +96,11 @@ function ServiceInformation() {
       </Row>
 
       <Row type="vertical">
-        <Heading as="textLarge">Basic Info</Heading>
+        <InformationItemTable data={userData} title="Basic Info" />
+      </Row>
 
-        <InformationItemRow
-          label="user Name"
-          data={fakeData[0].userName}
-          id="even"
-        />
-        <InformationItemRow
-          label="Car Model"
-          data={fakeData[0].carModel}
-          id="odd"
-        />
-        <InformationItemRow
-          label="Pallet number"
-          data={fakeData[0].plateNumber}
-          id="even"
-        />
-        <InformationItemRow
-          label="License Expiry Date"
-          data={fakeData[0].licenseExpiryDate}
-          id="odd"
-        />
-        <InformationItemRow
-          label="Phone Number"
-          data={fakeData[0].phoneNumber}
-          id="even"
-        />
-        <InformationItemRow
-          label="Request Date"
-          data={fakeData[0].requestData}
-          id="odd"
-        />
+      <Row type="vertical">
+        <InformationItemTable data={issueData} title="Service Info" />
       </Row>
     </>
   );

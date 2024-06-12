@@ -1,6 +1,8 @@
 import axios from "axios";
 import supabase, { supabaseUrl } from "./supabase";
 
+const URL = "https://route-service.app/user-api/v1/";
+
 export async function signup({ fullName, email, password }) {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -20,16 +22,13 @@ export async function signup({ fullName, email, password }) {
 
 export async function login({ phone, password }) {
   try {
-    const response = await axios.post(
-      "https://route-service.app/user-api/v1/login",
-      {
-        country_code: "02",
-        phone,
-        password,
-        device_token:
-          "cakDRZeZDjs:APA91bFhznZOVm1pvAWDPHpvWJyWY6ue8C5hX1wLX95ZQDHdnjv1kD47hHMK3QRIipV4FpMsA2FlyDG9FjEx4OXdI17LJIXrVFtwjgo3cC_EKBcS2Mg0MoKrEHDTcRh5XDs1lDez19Mp",
-      }
-    );
+    const response = await axios.post(`${URL}login`, {
+      country_code: "02",
+      phone,
+      password,
+      device_token:
+        "cakDRZeZDjs:APA91bFhznZOVm1pvAWDPHpvWJyWY6ue8C5hX1wLX95ZQDHdnjv1kD47hHMK3QRIipV4FpMsA2FlyDG9FjEx4OXdI17LJIXrVFtwjgo3cC_EKBcS2Mg0MoKrEHDTcRh5XDs1lDez19Mp",
+    });
 
     if (response && response.data) {
       // Assuming the response contains a token
