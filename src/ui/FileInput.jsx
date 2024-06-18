@@ -1,25 +1,57 @@
-import styled from "styled-components";
+import { useState } from "react";
 
-const FileInput = styled.input.attrs({ type: "file" })`
-  font-size: 1.4rem;
-  border-radius: var(--border-radius-sm);
+function FileInput({ placeholder, icon }) {
+  const styles = {
+    container: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "327px",
+      height: "56px",
+      padding: "8px 16px 8px 16px",
+      gap: "16px",
+      borderRadius: "16px",
+      border: "1px solid var(--color-grey-300)",
+      opacity: "0px",
+      backgroundColor: "#f7f8fa",
+    },
+    label: {
+      color: "#666",
+      fontSize: "16px",
+    },
+    fileInput: {
+      display: "none",
+    },
+    icon: {
+      cursor: "pointer",
+      fontSize: "24px",
+    },
+  };
 
-  &::file-selector-button {
-    font: inherit;
-    font-weight: 500;
-    padding: 0.8rem 1.2rem;
-    margin-right: 1.2rem;
-    border-radius: var(--border-radius-sm);
-    border: none;
-    color: var(--color-brand-50);
-    background-color: var(--color-brand-600);
-    cursor: pointer;
-    transition: color 0.2s, background-color 0.2s;
+  const [fileName, setFileName] = useState("");
 
-    &:hover {
-      background-color: var(--color-brand-700);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileName(file.name);
     }
-  }
-`;
+  };
+
+  return (
+    <div style={styles.container}>
+      <label htmlFor="user-photo" style={styles.label}>
+        {fileName || placeholder}
+      </label>
+      <input
+        type="file"
+        id="user-photo"
+        accept="image/*"
+        style={styles.fileInput}
+        onChange={handleFileChange}
+      />
+      <span style={styles.icon}>{icon}</span>
+    </div>
+  );
+}
 
 export default FileInput;

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 const StyledFormRow = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   grid-template-columns: 24rem 1fr 1.2fr;
-  gap: 2.4rem;
 
   padding: 1.2rem 0;
 
@@ -22,13 +23,11 @@ const StyledFormRow = styled.div`
 
   &:has(button) {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     gap: 1.2rem;
   }
-`;
-
-const Label = styled.label`
-  font-weight: 500;
 `;
 
 const Error = styled.span`
@@ -36,10 +35,9 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function FormRow({ label, error, children }) {
+function FormRow({ error, children }) {
   return (
     <StyledFormRow>
-      {label && <Label htmlFor={children.props.id}>{label}</Label>}
       {children}
       <Error>{error}</Error>
     </StyledFormRow>

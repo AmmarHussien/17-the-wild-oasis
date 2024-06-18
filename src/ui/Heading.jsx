@@ -49,7 +49,7 @@ const Heading = styled.h1`
       line-height: 24px;
     `}
     ${(props) =>
-    props.as === "textSmall" &&
+    props.as === "h5" &&
     css`
       font-size: 12px;
       font-weight: 400;
@@ -57,7 +57,7 @@ const Heading = styled.h1`
       line-height: 16px;
     `}
     ${(props) =>
-    props.as === "textLarge" &&
+    props.as === "h6" &&
     css`
       font-size: 15px;
       font-weight: 700;
@@ -66,7 +66,7 @@ const Heading = styled.h1`
     `}
 
     ${(props) =>
-    props.as === "chartTextMonth" &&
+    props.as === "h7" &&
     css`
       font-family: Noto Sans Display;
       font-size: 20.57px;

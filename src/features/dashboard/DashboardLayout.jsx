@@ -26,12 +26,12 @@ const SmallContainer = styled.div`
 function DashboardLayout() {
   const { bookings, isLoading: isLoadingBookings } = useRecentBookings();
   const {
-    confirmedStays,
+    //confirmedStays,
     isLoading: isLoadingStays,
     numDays,
   } = useRecentStays();
 
-  const { cabins, isLoading: isLoadingCabins } = useCabins();
+  const { isLoading: isLoadingCabins } = useCabins();
 
   if (isLoadingBookings || isLoadingStays || isLoadingCabins)
     return <Spinner />;

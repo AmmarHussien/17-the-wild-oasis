@@ -10,7 +10,7 @@ import {
   YAxis,
   ResponsiveContainer,
 } from "recharts";
-import { UseDarkMode } from "../../context/DarkModeContext";
+//import { UseDarkMode } from "../../context/DarkModeContext";
 import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -70,7 +70,7 @@ const StyledSalesChartHeaderRight = styled.div`
 `;
 
 function SalesChart({ bookings, numDays }) {
-  const { isDarkMode } = UseDarkMode();
+  //const { isDarkMode } = UseDarkMode();
 
   const allDates = eachDayOfInterval({
     start: subDays(new Date(), numDays - 1),
@@ -89,26 +89,33 @@ function SalesChart({ bookings, numDays }) {
     };
   });
 
-  const colors = isDarkMode
-    ? {
-        totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
-        extrasSales: { stroke: "#22c55e", fill: "#22c55e" },
-        text: "#e5e7eb",
-        background: "#18212f",
-      }
-    : {
-        totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
-        extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
-        text: "#374151",
-        background: "#fff",
-      };
+  // const colors = isDarkMode
+  //   ? {
+  //       totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
+  //       extrasSales: { stroke: "#22c55e", fill: "#22c55e" },
+  //       text: "#e5e7eb",
+  //       background: "#18212f",
+  //     }
+  //   : {
+  //       totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
+  //       extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
+  //       text: "#374151",
+  //       background: "#fff",
+  //     };
+
+  const colors = {
+    totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
+    extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
+    text: "#374151",
+    background: "#fff",
+  };
 
   return (
     <StyledSalesChart>
       <StyledSalesChartHeader>
         <StyledSalesChartHeaderLeft>
-          <Heading as="textLarge">Total Revenues</Heading>
-          <Heading as="textSmall">
+          <Heading as="h6">Total Revenues</Heading>
+          <Heading as="h5">
             Indication for the total revenue over this month
           </Heading>
         </StyledSalesChartHeaderLeft>
@@ -120,7 +127,7 @@ function SalesChart({ bookings, numDays }) {
             }}
           />
 
-          <Heading as="chartTextMonth"> Oct </Heading>
+          <Heading as="h7"> Oct </Heading>
           <ChevronRightIcon
             sx={{
               fontSize: "50px",

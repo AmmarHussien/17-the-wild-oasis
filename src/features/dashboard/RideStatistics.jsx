@@ -35,8 +35,8 @@ function RideStatistics() {
   return (
     <>
       <StyledTextContainer>
-        <Heading as="textLarge">Rides statistics</Heading>
-        <Heading as="textSmall">
+        <Heading as="h6">Rides statistics</Heading>
+        <Heading as="h5">
           Indication for the total rides over this month
         </Heading>
       </StyledTextContainer>
