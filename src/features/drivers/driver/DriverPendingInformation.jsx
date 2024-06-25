@@ -1,19 +1,16 @@
 import styled, { css } from "styled-components";
 import { useMoveBack } from "../../../hooks/useMoveBack";
 import ButtonText from "../../../ui/ButtonText";
-import UsersRecentRideTable from "../../users/user/UserRecentRideTable";
-import EditDriver from "./EditDriver";
-import DriverComplainsTable from "./DriverComplainsTable";
-import BlockDriver from "./BlockDriver";
-import InformationItemTable from "./InformationItemTable";
-import InternalNotes from "../../../ui/internalNotes/InternalNotes";
+import InformationItemTable from "../../users/user/InformationItemTable";
 
-const ActivityData = {
-  CreditBalance: 1500,
-  TotalRating: 5,
-  TotalRides: 150,
-  TotalEarning: 5500,
-  TotalPoints: 100,
+import AcceptDriver from "./Accept";
+import RejectDriver from "./Reject";
+
+const VehicleInfo = {
+  CarLicenseExpiry: 1500,
+  TowTruckRegisterion: 5,
+  CodeForCostPerKm: 150,
+  VehicleSpec: `4 Seats Electric Automatic 30000 - 50000 KM Gray`,
 };
 
 const DriverData = {
@@ -24,14 +21,14 @@ const DriverData = {
   licenseExpiryDate: "2026-05-01",
   joiningDate: "2026-05-01",
 };
-function DriverInformation() {
+function DriverPendingInformation() {
   const Row = styled.div`
     display: flex;
 
     ${(props) =>
       props.type === "horizontal" &&
       css`
-        justify-content: space-between;
+        //justify-content: space-between;
         align-items: center;
         gap: 10px;
       `}
@@ -53,24 +50,19 @@ function DriverInformation() {
           <ButtonText onClick={moveBack}>&larr; Drivers</ButtonText>
           <h1>Driver Information</h1>
         </Row>
-        <Row type="horizontal">
-          <EditDriver />
-          <BlockDriver />
-        </Row>
       </Row>
 
       <Row>
         <InformationItemTable data={DriverData} title="Drivers's Info" />
-        <InformationItemTable data={ActivityData} title="Activities Info" />
+        <InformationItemTable data={VehicleInfo} title="Vehicle Info" />
       </Row>
 
-      <UsersRecentRideTable />
-
-      <DriverComplainsTable />
-
-      <InternalNotes />
+      <Row type="horizontal">
+        <AcceptDriver />
+        <RejectDriver />
+      </Row>
     </>
   );
 }
 
-export default DriverInformation;
+export default DriverPendingInformation;

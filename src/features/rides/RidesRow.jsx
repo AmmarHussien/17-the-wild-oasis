@@ -1,26 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import Table from "../../../ui/Table";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Table from "../../ui/Table";
 import styled, { css } from "styled-components";
 
-function ComplainsRow({ userInfo }) {
+function RidesRow({ userInfo }) {
   const navigete = useNavigate();
-
-  const {
-    driverName,
-    destinationA,
-    destinationB,
-    date,
-    price,
-    status,
-
-    id,
-  } = userInfo;
+  const [searchParams] = useSearchParams();
+  const { id, driverName, userName, dateAndTime, price, status } = userInfo;
 
   function handleClick() {
-    //navigete(`/user-information/${id}`);
+    navigete(`/ride-information/${id}`);
+
     // Add your click handling logic here
   }
-
   const Div = styled.div`
     ${(props) =>
       props.as === "ongoing" &&
@@ -43,20 +34,22 @@ function ComplainsRow({ userInfo }) {
     <Table columns="1fr 1fr 1fr 1fr 1fr 1fr">
       <Table.Row>
         <div onClick={handleClick} style={{ cursor: "pointer" }}>
-          {driverName}
+          {id}
         </div>
-        <div>{destinationA}</div>
-        <div>{destinationB}</div>
-        <div>{date}</div>
+        <div>{driverName}</div>
+        <div>{userName}</div>
+        <div>{dateAndTime}</div>
         <div>{price}</div>
         {status === "On Going" ? (
           <Div as="ongoing">{status}</Div>
         ) : status === "completed" ? (
           <Div as="completed">{status}</Div>
+        ) : status === "cancelled" ? (
+          <Div as="cancelled">{status}</Div>
         ) : null}
       </Table.Row>
     </Table>
   );
 }
 
-export default ComplainsRow;
+export default RidesRow;

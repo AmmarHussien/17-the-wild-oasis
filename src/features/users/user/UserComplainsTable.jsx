@@ -1,7 +1,6 @@
 import Pagination from "../../../ui/Pagination";
 import Table from "../../../ui/Table";
 import ComplainsRow from "./ComplainsRow";
-import UserRow from "./UserRow";
 
 const fakeData = [
   {
@@ -20,7 +19,7 @@ const fakeData = [
     destinationB: "helwan",
     date: "2017-12-12",
     price: "300",
-    status: "completed",
+    status: "On Going",
   },
   {
     id: 3,
@@ -29,7 +28,7 @@ const fakeData = [
     destinationB: "helwan",
     date: "2017-12-12",
     price: "300",
-    status: "completed",
+    status: "On Going",
   },
   {
     id: 4,
@@ -38,7 +37,7 @@ const fakeData = [
     destinationB: "helwan",
     date: "2017-12-12",
     price: "300",
-    status: "completed",
+    status: "On Going",
   },
 
   // Add more fake data as needed

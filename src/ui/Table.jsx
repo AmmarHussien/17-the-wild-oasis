@@ -117,7 +117,7 @@ function TableNav({ title }) {
   return (
     <StyledNav>
       <StyledNavDiv>
-        <Heading as="textLarge">{title}</Heading>
+        <Heading as="h6">{title}</Heading>
       </StyledNavDiv>
       <StyledNavDiv>
         <TextField

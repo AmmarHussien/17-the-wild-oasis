@@ -30,6 +30,8 @@ import EditNewCarService from "./features/car-services/EditNewCarService copy";
 import Cabins from "./pages/Cabins";
 import UserInformation from "./features/users/user/UserInformation";
 import DriverInformation from "./features/drivers/driver/DriverInformation";
+import DriverPendingInformation from "./features/drivers/driver/DriverPendingInformation";
+import RideInformation from "./features/rides/ride/RideInformation";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -68,7 +70,12 @@ function App() {
               path="/driver-information/:Id"
               element={<DriverInformation />}
             />
+            <Route
+              path="/driver-pending-information/:Id"
+              element={<DriverPendingInformation />}
+            />
             <Route path="/rides" element={<Rides />} />
+            <Route path="/ride-information/:Id" element={<RideInformation />} />
             <Route path="/vehicles" element={<Vehicles />} />
             <Route path="/logistic" element={<Logistic />} />
             <Route path="/profit" element={<Profit />} />
