@@ -31,6 +31,8 @@ import Cabins from "./pages/Cabins";
 import UserInformation from "./features/users/user/UserInformation";
 import DriverInformation from "./features/drivers/driver/DriverInformation";
 import DriverPendingInformation from "./features/drivers/driver/DriverPendingInformation";
+import AddNewVehicle from "./features/vehicles/AddNewVehicle";
+import VehicleInformation from "./features/vehicles/vehicle/VehicleInformation";
 import RideInformation from "./features/rides/ride/RideInformation";
 
 const queryClient = new QueryClient({
@@ -60,10 +62,8 @@ function App() {
               path="/car-service-information/:Id"
               element={<ServiceInformation />}
             />
-
             <Route path="/users" element={<Users />} />
             <Route path="/user-information/:Id" element={<UserInformation />} />
-
             {/* //<Route path="/users/add-user" element={<AddUser />} /> */}
             <Route path="/drivers" element={<Drivers />} />
             <Route
@@ -77,6 +77,12 @@ function App() {
             <Route path="/rides" element={<Rides />} />
             <Route path="/ride-information/:Id" element={<RideInformation />} />
             <Route path="/vehicles" element={<Vehicles />} />
+            <Route path="/add-vehicle" element={<AddNewVehicle />} />
+            <Route
+              path="/Vehicle-information/:Id"
+              element={<VehicleInformation />}
+            />
+            VehicleInformation
             <Route path="/logistic" element={<Logistic />} />
             <Route path="/profit" element={<Profit />} />
             <Route path="/documents" element={<Documents />} />
@@ -84,7 +90,6 @@ function App() {
             <Route path="/rating" element={<Rating />} />
             <Route path="/promos" element={<Promos />} />
             <Route path="/customisation" element={<Cabins />} />
-
             {/* <Route path="/bookings" element={<Bookings />} />
               <Route path="/Bookings/:bookingId" element={<Booking />} />
               <Route path="/checkin/:bookingId" element={<Checkin />} />

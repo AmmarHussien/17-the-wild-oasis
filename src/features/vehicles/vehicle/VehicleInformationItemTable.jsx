@@ -51,7 +51,7 @@ const IMG = styled.img`
   height: 400px;
 `;
 
-function InformationItemTable({ title, data }) {
+function VehicleInformationItemTable({ title, data }) {
   if (!data === null) return <Empty>No data to show at the moment</Empty>;
 
   return (
@@ -73,4 +73,4 @@ function InformationItemTable({ title, data }) {
   );
 }
 
-export default InformationItemTable;
+export default VehicleInformationItemTable;

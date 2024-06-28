@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import { useMoveBack } from "../../../hooks/useMoveBack";
 import ButtonText from "../../../ui/ButtonText";
-import InformationItemTable from "./InformationItemTable";
 import InternalNotes from "../../../ui/internalNotes/InternalNotes";
+import RideInformationItemTable from "./RideInformationItemTable";
 
 const MapData = {
   src: "/map.png",
@@ -51,8 +51,8 @@ function RideInformation() {
       </Row>
 
       <Row>
-        <InformationItemTable data={RideData} title="Basic Info" />
-        <InformationItemTable data={MapData} />
+        <RideInformationItemTable data={RideData} title="Basic Info" />
+        <RideInformationItemTable data={MapData} />
       </Row>
 
       <InternalNotes />

@@ -57,19 +57,55 @@ function AddNewCarService() {
       `}
   `;
 
+  const selectDriver = [
+    { value: "toyota", label: "Toyota Camry" },
+    { value: "honda", label: "Honda Accord" },
+    { value: "ford", label: "Ford Mustang" },
+  ];
+  const carMake = [
+    { value: "toyota", label: "Toyota Camry" },
+    { value: "honda", label: "Honda Accord" },
+    { value: "ford", label: "Ford Mustang" },
+  ];
   const carOptions = [
     { value: "toyota", label: "Toyota Camry" },
     { value: "honda", label: "Honda Accord" },
     { value: "ford", label: "Ford Mustang" },
   ];
+
+  const modelYear = [
+    { value: "2020", label: "2020" },
+    { value: "2021", label: "2021" },
+    { value: "2022", label: "2022" },
+    { value: "2023", label: "2023" },
+    { value: "2024", label: "2024" },
+  ];
   const moveBack = useMoveBack();
 
   const [selectedCar, setSelectedCar] = useState("");
 
+  const [selectedCarMake, setSelectedCarMake] = useState("");
+
+  const [selectedDriver, setSelectedDriver] = useState("");
+
+  const [selectedModelYear, setSelectedModelYear] = useState("");
+
   const navigate = useNavigate();
 
-  const handleCarChange = (event) => {
+  const handleCarModel = (event) => {
     setSelectedCar(event.target.value);
+  };
+
+  const handleSelectDriver = (event) => {
+    setSelectedDriver(event.target.value);
+  };
+
+  const handleCarMake = (event) => {
+    setSelectedCarMake(event.target.value);
+  };
+
+  const handleModelYear = (event) => {
+    setSelectedModelYear(event.target.value);
   };
 
   return (
@@ -114,10 +150,10 @@ function AddNewCarService() {
           }}
         >
           <DropdownMenu
-            options={carOptions}
+            options={selectDriver}
             label="Select Driver"
-            value={selectedCar}
-            onChange={handleCarChange}
+            value={selectedDriver}
+            onChange={handleSelectDriver}
           />
         </Box>
         <Box>
@@ -144,10 +180,10 @@ function AddNewCarService() {
           }}
         >
           <DropdownMenu
-            options={carOptions}
+            options={carMake}
             label="Car Make"
-            value={selectedCar}
-            onChange={handleCarChange}
+            value={selectedCarMake}
+            onChange={handleCarMake}
           />
         </Box>
         <Box
@@ -161,7 +197,7 @@ function AddNewCarService() {
             options={carOptions}
             label="Car Model"
             value={selectedCar}
-            onChange={handleCarChange}
+            onChange={handleCarModel}
           />
         </Box>
       </Row>
@@ -174,10 +210,10 @@ function AddNewCarService() {
           }}
         >
           <DropdownMenu
-            options={carOptions}
+            options={modelYear}
             label="Model Year"
-            value={selectedCar}
-            onChange={handleCarChange}
+            value={selectedModelYear}
+            onChange={handleModelYear}
           />
         </Box>
         <Box>
