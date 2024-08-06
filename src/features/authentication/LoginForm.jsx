@@ -49,7 +49,7 @@ const Button = styled.button`
 `;
 
 function LoginForm() {
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -58,17 +58,18 @@ function LoginForm() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!phone || !password) return;
+    if (!email || !password) return;
 
-    login(
-      { phone, password },
-      {
-        onSettled: () => {
-          setPhone("");
-          setPassword("");
-        },
-      }
-    );
+    login(email, password);
+    // login(
+    //   { email, password },
+    //   {
+    //     onSettled: () => {
+    //       setEmail("");
+    //       setPassword("");
+    //     },
+    //   }
+    // );
   }
 
   const handleClick = () => {
@@ -80,13 +81,13 @@ function LoginForm() {
       <Heading as="h3">Please Login To Your Account</Heading>
       <FormRowVertical label="">
         <TextField
-          type="number"
-          id="phone"
+          type="email"
+          id="email"
           // This makes this form better for password managers
-          autoComplete="phone"
-          placeholder="Phone Number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          autoComplete="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           disabled={isLoading}
           sx={{
             backgroundColor: "rgb(247, 248, 250)",

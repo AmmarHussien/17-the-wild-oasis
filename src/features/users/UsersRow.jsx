@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import Table from "../../ui/Table";
 
-function UsersRow({ userInfo }) {
+function UsersRow({
+  userInfo: { id: userId, name, phone_number, email, number_ride, rate },
+}) {
   const navigete = useNavigate();
-  const { name, phoneNumber, email, numberOfRides, rate, id } = userInfo;
+  //const { name, phoneNumber, email, numberOfRides, rate, id } = userInfo;
 
   console.log(name);
 
   function handleClick() {
-    navigete(`/user-information/${id}`);
+    navigete(`/user-information/${userId}`);
     // Add your click handling logic here
   }
 
@@ -18,9 +20,9 @@ function UsersRow({ userInfo }) {
         <div onClick={handleClick} style={{ cursor: "pointer" }}>
           {name}
         </div>
-        <div>{phoneNumber}</div>
+        <div>{phone_number}</div>
         <div>{email}</div>
-        <div>{numberOfRides}</div>
+        <div>{number_ride}</div>
         <div>{rate}</div>
       </Table.Row>
     </Table>

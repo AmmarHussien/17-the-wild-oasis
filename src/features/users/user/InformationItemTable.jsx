@@ -51,6 +51,8 @@ const Empty = styled.p`
 function InformationItemTable({ title, data }) {
   if (!data === null) return <Empty>No data to show at the moment</Empty>;
 
+  console.log(data);
+
   return (
     <TableContainer>
       <Title>{title}</Title>

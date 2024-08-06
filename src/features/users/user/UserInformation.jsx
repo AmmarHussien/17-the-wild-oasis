@@ -7,24 +7,23 @@ import UsersRecentRideTable from "./UserRecentRideTable";
 import UserComplainsTable from "./UserComplainsTable";
 import InformationItemTable from "./InformationItemTable";
 import EditUser from "./EditUser";
-import UserInformationWithImage from "./UserInformationWithImage";
+import useUserInfo from "../useUserInfo";
+import Spinner from "../../../ui/Spinner";
+import Empty from "../../../ui/Empty";
+import useUserActivity from "../useUserActivity";
 
-const userData = {
-  userName: "John Doe",
-  carModel: "Toyota Camry",
-  palletNumber: "ABC-1234",
-  licenseExpiryDate: "2026-05-01",
-  phoneNumber: "123-456-7890",
-  requestDate: "2024-05-01",
-};
-
-const userDatas = {
-  userName: "John Doe",
-  email: "john@example.com",
-  carModel: "Toyota Camry",
-  palletNumber: "ABC-1234",
-};
 function UserInformation() {
+  const { userInfo, isLoading1 } = useUserInfo();
+  const { userActivity, isLoading } = useUserActivity();
+
+  const moveBack = useMoveBack();
+
+  console.log(userActivity);
+
+  if (isLoading1 || isLoading) return <Spinner />;
+
+  if (!userInfo) return <Empty resource="users" />;
+
   const Row = styled.div`
     display: flex;
 
@@ -44,7 +43,7 @@ function UserInformation() {
         align-items: start;
       `}
   `;
-  const moveBack = useMoveBack();
+
   //const navigete = useNavigate();
   return (
     <>
@@ -82,8 +81,8 @@ function UserInformation() {
       </Row>
 
       <Row>
-        <InformationItemTable data={userDatas} title="User's Info" />
-        <InformationItemTable data={userData} title="Activities Indo" />
+        <InformationItemTable data={userInfo} title="User's Info" />
+        <InformationItemTable data={userActivity} title="Activities Info" />
       </Row>
 
       <UsersRecentRideTable />

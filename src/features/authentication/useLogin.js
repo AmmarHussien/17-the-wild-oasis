@@ -9,7 +9,7 @@ export function useLogin() {
   const navigate = useNavigate();
 
   const { mutate: login, isLoading } = useMutation({
-    mutationFn: ({ phone, password }) => loginApi({ phone, password }),
+    mutationFn: ({ email, password }) => loginApi({ email, password }),
 
     onSuccess: (response) => {
       if (!response) {

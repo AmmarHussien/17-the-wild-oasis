@@ -45,7 +45,7 @@ function DashboardLayout() {
           <DurationChart confirmedStays={confirmedStays} /> */}
       </StyledDashboardLayout>
       <SmallContainer>
-        <SalesChart bookings={bookings} numDays={numDays} />
+        {/* <SalesChart bookings={bookings} numDays={numDays} /> */}
         <RidesStatistics />
       </SmallContainer>
       <RecentRide />

@@ -7,9 +7,11 @@ function UsersTableOperations() {
       <Filter
         filterField="status"
         options={[
-          { value: "Approved", label: "Approved" },
+          { value: "all", label: "All" },
 
-          { value: "Suspended", label: "Suspended" },
+          { value: "approved", label: "Approved" },
+
+          { value: "suspended", label: "Suspended" },
         ]}
       />
 

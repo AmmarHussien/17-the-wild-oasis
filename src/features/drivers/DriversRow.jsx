@@ -10,6 +10,7 @@ function DriversRow({ userInfo }) {
     vehicleLicenseExpiry,
     email,
     phoneNumber,
+    reason,
     id,
   } = userInfo;
 
@@ -20,7 +21,20 @@ function DriversRow({ userInfo }) {
     // Add your click handling logic here
   }
 
-  return (
+  return searchParams.get("status") === "Blocked" ? (
+    <Table columns="1fr 1fr 1fr 1fr 1fr 1fr">
+      <Table.Row>
+        <div onClick={handleClick} style={{ cursor: "pointer" }}>
+          {driverName}
+        </div>
+        {reason === "" ? <div>N/A</div> : <div>{reason}</div>}
+        <div>{personalLicenseExpiry}</div>
+        <div>{vehicleLicenseExpiry}</div>
+        <div>{email}</div>
+        <div>{phoneNumber}</div>
+      </Table.Row>
+    </Table>
+  ) : (
     <Table columns="1fr 1fr 1fr 1fr 1fr ">
       <Table.Row>
         <div onClick={handleClick} style={{ cursor: "pointer" }}>
