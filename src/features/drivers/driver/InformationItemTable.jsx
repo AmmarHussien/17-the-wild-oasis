@@ -2,11 +2,12 @@ import styled from "styled-components";
 
 const TableContainer = styled.div`
   width: 100%;
-  /* margin: 20px; */
+  margin: 10px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  height: fit-content;
 `;
 
 const Title = styled.h2`

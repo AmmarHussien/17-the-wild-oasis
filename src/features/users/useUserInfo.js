@@ -1,11 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { getUserInfo } from "../../services/apiUsers";
+import { getUser } from "../../services/apiUsers";
 
-function useUserInfo() {
+function useUser() {
   const { Id } = useParams();
-
-  console.log(Id);
 
   const {
     isLoading,
@@ -13,10 +11,10 @@ function useUserInfo() {
     error,
   } = useQuery({
     queryKey: ["userInfo", Id],
-    queryFn: () => getUserInfo(Id),
+    queryFn: () => getUser(Id),
     retry: false,
   });
   return { isLoading, userInfo, error };
 }
 
-export default useUserInfo;
+export default useUser;

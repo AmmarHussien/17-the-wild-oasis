@@ -2,95 +2,10 @@ import Pagination from "../../../ui/Pagination";
 import Table from "../../../ui/Table";
 import UserRow from "./UserRow";
 
-const fakeData = [
-  {
-    id: 1,
-    driverName: "Ahmed",
-    destinationA: "maadi",
-    destinationB: "helwan",
-    date: "2017-12-12",
-    price: "300",
-    status: "completed",
-    rate: "5",
-  },
-  {
-    id: 2,
-    driverName: "Ahmed",
-    destinationA: "maadi",
-    destinationB: "helwan",
-    date: "2017-12-12",
-    price: "300",
-    status: "completed",
-    rate: "5",
-  },
-  {
-    id: 3,
-    driverName: "Ahmed",
-    destinationA: "maadi",
-    destinationB: "helwan",
-    date: "2017-12-12",
-    price: "300",
-    status: "completed",
-    rate: "5",
-  },
-  {
-    id: 4,
-    driverName: "Ahmed",
-    destinationA: "maadi",
-    destinationB: "helwan",
-    date: "2017-12-12",
-    price: "300",
-    status: "completed",
-    rate: "5",
-  },
-  {
-    id: 5,
-    driverName: "Ahmed",
-    destinationA: "maadi",
-    destinationB: "helwan",
-    date: "2017-12-12",
-    price: "300",
-    status: "completed",
-    rate: "5",
-  },
-  {
-    id: 6,
-    driverName: "Ahmed",
-    destinationA: "maadi",
-    destinationB: "helwan",
-    date: "2017-12-12",
-    price: "300",
-    status: "completed",
-    rate: "5",
-  },
-  {
-    id: 7,
-    driverName: "Ahmed",
-    destinationA: "maadi",
-    destinationB: "helwan",
-    date: "2017-12-12",
-    price: "300",
-    status: "completed",
-    rate: "5",
-  },
-  {
-    id: 8,
-    driverName: "Ahmed",
-    destinationA: "maadi",
-    destinationB: "helwan",
-    date: "2017-12-12",
-    price: "300",
-    status: "completed",
-    rate: "5",
-  },
-
-  // Add more fake data as needed
-];
-
-function UsersRecentRideTable() {
+function UsersRecentRideTable({ rides }) {
   return (
     <Table columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
-      <Table.TableNav title="Recent Rides" />
+      <Table.TableNaView title="Recent Rides" />
       <Table.Header>
         <div>Driver Name</div>
         <div>Destination A</div>
@@ -102,12 +17,12 @@ function UsersRecentRideTable() {
       </Table.Header>
 
       <Table.Body
-        data={fakeData}
+        data={rides}
         render={(item) => <UserRow userInfo={item} key={item.id} />}
       />
 
       <Table.Footer>
-        <Pagination count={fakeData.length} />
+        <Pagination count={rides.length} />
       </Table.Footer>
     </Table>
   );

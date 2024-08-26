@@ -1,57 +1,68 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
-import { PAGE_SIZE } from "../../utils/constants";
-import { getUsers } from "../../services/apiUsers";
+import { getAllUsers } from "../../services/apiUsers";
 
 function useUsers() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
-  // 1) filter
+  // Filter Logic
   const filterValue = searchParams.get("status");
-
   const filter =
-    !filterValue || filterValue === "all"
-      ? null
-      : { field: "status", value: filterValue };
-  //{ field: "status", value: filterValue, method: "gte" };
+    filterValue && filterValue !== "All"
+      ? { field: "status", value: filterValue }
+      : null;
 
   // 2) sort
 
-  const sortByRow = searchParams.get("sortBy") || "startDate-desc";
+  const sortByRow = searchParams.get("sortBy") || "id-desc";
 
   const [field, direction] = sortByRow.split("-");
-  const sortBy = { field, direction };
+  const sortBy = field;
+  const sortType = direction;
 
-  //PAGIN
+  // Pagination Logic
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
 
-  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  // per page logic
+  const perPage = searchParams.get("per_page")
+    ? Number(searchParams.get("per_page"))
+    : 10;
 
-  //query
+  // Main Query
   const {
     isLoading,
-    data: { data: users, count } = {},
+    data: usersData = {}, // Ensure default object
     error,
   } = useQuery({
-    queryKey: ["users", filter, sortBy, page],
-    queryFn: () => getUsers({ filter, sortBy, page }),
+    queryKey: ["users", filter, page, sortBy, sortType, perPage],
+    queryFn: () => getAllUsers({ filter, page, sortBy, sortType, perPage }),
+    keepPreviousData: true,
   });
 
-  // pre-fatching
-  const pageCount = Math.ceil(count / PAGE_SIZE);
-  if (page < pageCount)
-    queryClient.prefetchQuery({
-      queryKey: ["users", filter, sortBy, page + 1],
-      queryFn: () => getUsers({ filter, sortBy, page: page + 1 }),
-    });
+  const { data: users = [], count } = usersData;
 
-  if (page > 1)
-    queryClient.prefetchQuery({
-      queryKey: ["users", filter, sortBy, page - 1],
-      queryFn: () => getUsers({ filter, sortBy, page: page - 1 }),
-    });
+  const pageCount = Math.ceil(count / perPage);
 
-  return { isLoading, users, error, count };
+  // Prefetch Next Page
+  if (page < pageCount) {
+    queryClient.prefetchQuery({
+      queryKey: ["users", filter, page + 1, sortBy, sortType, perPage],
+      queryFn: () =>
+        getAllUsers({ filter, page: page + 1, sortBy, sortType, perPage }),
+    });
+  }
+
+  // Prefetch Previous Page
+  if (page > 1) {
+    queryClient.prefetchQuery({
+      queryKey: ["users", filter, page - 1, sortBy, sortType, perPage],
+      queryFn: () =>
+        getAllUsers({ filter, page: page - 1, sortBy, sortType, perPage }),
+    });
+  }
+
+  return { isLoading, users, count, error };
 }
 
 export default useUsers;

@@ -1,11 +1,7 @@
 import { createContext, useContext } from "react";
 import styled from "styled-components";
 import Heading from "./Heading";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import SystemUpdateAltSharpIcon from "@mui/icons-material/SystemUpdateAltSharp";
-import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import DownloadTable from "../utils/DownLoadTable";
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -113,54 +109,25 @@ function Table({ columns, children }) {
   );
 }
 
-function TableNav({ title }) {
+function TableNaView({ title }) {
+  return (
+    <StyledNav>
+      <StyledNavDiv>
+        <Heading as="h6">{title}</Heading>
+      </StyledNavDiv>
+    </StyledNav>
+  );
+}
+
+function TableNav({ title, tableData }) {
   return (
     <StyledNav>
       <StyledNavDiv>
         <Heading as="h6">{title}</Heading>
       </StyledNavDiv>
       <StyledNavDiv>
-        <TextField
-          placeholder="Search"
-          type="text"
-          id="password"
-          autoComplete="current-password"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton edge="end">
-                  <SearchOutlinedIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          sx={{
-            width: 327,
-            gap: 16,
-            borderColor: "#E6E9EF",
-            backgroundColor: "#FFFFFF",
-            cursor: "pointer",
-            borderRadius: "8px",
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": {
-                borderColor: "#d3d3d3",
-              },
-              "&:hover fieldset": {
-                borderColor: "#a9a9a9",
-              },
-            },
-          }}
-        />
         <StyledNavIcon>
-          <IconButton edge="start">
-            <HiOutlineCog6Tooth width={24} height={24} />
-          </IconButton>
-          <IconButton edge="start">
-            <FilterAltOutlinedIcon sx={{ width: 24, height: 24 }} />
-          </IconButton>
-          <IconButton edge="start">
-            <SystemUpdateAltSharpIcon sx={{ width: 24, height: 24 }} />
-          </IconButton>
+          <DownloadTable tableData={tableData} title={title} />
         </StyledNavIcon>
       </StyledNavDiv>
     </StyledNav>
@@ -196,5 +163,6 @@ Table.Body = Body;
 Table.Row = Row;
 Table.Footer = Footer;
 Table.TableNav = TableNav;
+Table.TableNaView = TableNaView;
 
 export default Table;

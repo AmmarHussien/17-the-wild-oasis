@@ -31,6 +31,12 @@ function BlockDriverForm({ cabinToEdit = {}, onCloseModal }) {
 
   const isWorking = isCreating || isEditing;
 
+  const options = [
+    { key: 1, name: "Option 1" },
+    { key: 2, name: "Option 2" },
+    { key: 3, name: "Option 3" },
+  ];
+
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
@@ -68,10 +74,7 @@ function BlockDriverForm({ cabinToEdit = {}, onCloseModal }) {
       <Title>Please complete filling these data</Title>
 
       <FormRow error={errors?.name?.message}>
-        <DropDownMenu
-          title="Obtion"
-          options={["Option 1", "Option 2", "Option 3"]}
-        />
+        <DropDownMenu title="options" options={options} />
       </FormRow>
 
       <FormRow error={errors?.reason?.message}>
@@ -83,7 +86,7 @@ function BlockDriverForm({ cabinToEdit = {}, onCloseModal }) {
             required: "This Field is required",
             min: {
               value: 1,
-              message: "REason should be at least 1",
+              message: "Reason should be at least 1",
             },
           })}
         />

@@ -4,6 +4,7 @@ import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
 import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined";
 import CancelPresentationOutlinedIcon from "@mui/icons-material/CancelPresentationOutlined";
 import StatistecsItem from "./StatistecsItem";
+import useStatistics from "./useStatisctics";
 
 const StyledTextContainer = styled.div`
   top: 16px;
@@ -32,11 +33,13 @@ const VerticalDivider = styled.div`
   margin: 0 10px; // Adjust margin as needed
 `;
 function DriverStatistecs() {
+  const { statistics } = useStatistics();
+
   return (
     <>
       <StyledTextContainer>
-        <Heading as="textLarge">Driver statistics</Heading>
-        <Heading as="textSmall">
+        <Heading as="h6">Driver statistics</Heading>
+        <Heading as="h5">
           Indication for the total rides over this month
         </Heading>
       </StyledTextContainer>
@@ -51,7 +54,7 @@ function DriverStatistecs() {
           }
           title={"Aproved"}
           color="#20C992"
-          statistecs={150}
+          statistecs={statistics.approvedDrivers}
         />
         <VerticalDivider />
         <StatistecsItem
@@ -64,7 +67,7 @@ function DriverStatistecs() {
           }
           title={"Pending"}
           color="#EAB308"
-          statistecs={150}
+          statistecs={statistics.pendingDrivers}
         />
         <VerticalDivider />
         <StatistecsItem
@@ -77,7 +80,7 @@ function DriverStatistecs() {
           }
           title={"Blocked"}
           color="#FC5555"
-          statistecs={150}
+          statistecs={statistics.cancelledDrivers}
         />
       </StyledContentContainer>
     </>

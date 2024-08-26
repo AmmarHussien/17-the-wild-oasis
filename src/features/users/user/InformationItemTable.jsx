@@ -25,7 +25,7 @@ const RowItem = styled.div`
   justify-content: space-between;
   padding: 10px;
   border-bottom: 1px solid #ddd;
-  background-color: ${(props) => (props.even ? "#f1f1f1" : "#f9f9f9")};
+  background-color: ${(props) => (props.$even ? "#f1f1f1" : "#f9f9f9")};
 `;
 const Label = styled.div`
   flex: 1;
@@ -51,16 +51,20 @@ const Empty = styled.p`
 function InformationItemTable({ title, data }) {
   if (!data === null) return <Empty>No data to show at the moment</Empty>;
 
-  console.log(data);
-
   return (
     <TableContainer>
       <Title>{title}</Title>
       <Table>
         {Object.entries(data).map(([key, value], index) => (
-          <RowItem key={key} even={index % 2 === 1}>
+          <RowItem key={key} $even={index % 2 === 1}>
             <Label>{key.replace(/([A-Z])/g, " $1")}</Label>
-            <Value>{value}</Value>
+            <Value>
+              {typeof value === "object" &&
+              value.hasOwnProperty("balance") &&
+              value.hasOwnProperty("currency")
+                ? `${value.balance} ${value.currency}`
+                : value}
+            </Value>
           </RowItem>
         ))}
       </Table>

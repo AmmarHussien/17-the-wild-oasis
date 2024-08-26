@@ -2,59 +2,75 @@ import { useNavigate } from "react-router-dom";
 import Table from "../../../ui/Table";
 import styled, { css } from "styled-components";
 
+const Status = styled.div`
+  ${(props) =>
+    props.as === "Ongoing" &&
+    css`
+      color: #fe9e46;
+    `}
+  ${(props) =>
+    props.as === "Completed" &&
+    css`
+      color: #20c992;
+    `}
+  ${(props) =>
+    props.as === "Cancelled" &&
+    css`
+      color: #fc5555;
+    `}
+${(props) =>
+    props.as === "Pending" &&
+    css`
+      color: #fedf46;
+    `}
+${(props) =>
+    props.as === "Confirmed" &&
+    css`
+      color: #1e48a3;
+    `}
+`;
+
 function UserRow({ userInfo }) {
-  const navigete = useNavigate();
+  const navigate = useNavigate();
 
   const {
-    driverName,
-    destinationA,
-    destinationB,
-    date,
+    driver: { id: driverId, full_name },
+    pickup_address,
+    destination_address,
+    created_at,
     price,
     status,
     rate,
-    id,
+    currency,
   } = userInfo;
 
   function handleClick() {
-    navigete(`/driver-information/${id}`);
+    navigate(`/driver-information/${driverId}`);
     // Add your click handling logic here
   }
-
-  const Div = styled.div`
-    ${(props) =>
-      props.as === "ongoing" &&
-      css`
-        color: #fe9e46;
-      `}
-    ${(props) =>
-      props.as === "completed" &&
-      css`
-        color: #20c992;
-      `}
-      ${(props) =>
-      props.as === "cancelled" &&
-      css`
-        color: #fc5555;
-      `}
-  `;
 
   return (
     <Table columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
       <Table.Row>
         <div onClick={handleClick} style={{ cursor: "pointer" }}>
-          {driverName}
+          {full_name}
         </div>
-        <div>{destinationA}</div>
-        <div>{destinationB}</div>
-        <div>{date}</div>
-        <div>{price}</div>
-        {status === "On Going" ? (
-          <Div as="ongoing">{status}</Div>
-        ) : status === "completed" ? (
-          <Div as="completed">{status}</Div>
-        ) : status === "cancelled" ? (
-          <Div as="cancelled">{status}</Div>
+        <div>{pickup_address}</div>
+        <div>{destination_address}</div>
+        <div>{created_at}</div>
+        <div>
+          {price} {currency}
+        </div>
+        {status === "Pending" ? (
+          <Status as="Pending">{status}</Status>
+        ) : status === "Confirmed" ? (
+          <Status as="Confirmed">{status}</Status>
+        ) : status === "Cancelled" ? (
+          <Status as="Cancelled">{status}</Status>
+        ) : status === "Completed" ? (
+          <Status as="Completed">{status}</Status>
+        ) : status === "Ongoing" ? (
+          <Status as="Ongoing">{status}</Status>
         ) : null}
         <div>{rate}</div>
       </Table.Row>

@@ -7,6 +7,7 @@ function DriversTableOperations() {
       <Filter
         filterField="status"
         options={[
+          { value: "All", label: "All" },
           { value: "Approved", label: "Approved" },
           { value: "Pending", label: "Pending" },
           { value: "Blocked", label: "Blocked" },

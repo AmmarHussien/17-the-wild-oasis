@@ -2,137 +2,49 @@ import { useSearchParams } from "react-router-dom";
 import Pagination from "../../ui/Pagination";
 import Table from "../../ui/Table";
 import DriversRow from "./DriversRow";
-
-const fakeData = [
-  {
-    id: 1,
-    driverName: "Miimz",
-    personalLicenseExpiry: "2017-10-10",
-    vehicleLicenseExpiry: "2017-10-15",
-    email: "test@test",
-    phoneNumber: "123",
-    reason: "Kda",
-  },
-  {
-    id: 2,
-    driverName: "Miimz",
-    personalLicenseExpiry: "2017-10-10",
-    vehicleLicenseExpiry: "2017-10-15",
-    email: "test@test",
-    phoneNumber: "123",
-    reason: "",
-  },
-  {
-    id: 3,
-    driverName: "Miimz",
-    personalLicenseExpiry: "2017-10-10",
-    vehicleLicenseExpiry: "2017-10-15",
-    email: "test@test",
-    phoneNumber: "123",
-    reason: "",
-  },
-  {
-    id: 4,
-    driverName: "Miimz",
-    personalLicenseExpiry: "2017-10-10",
-    vehicleLicenseExpiry: "2017-10-15",
-    email: "test@test",
-    phoneNumber: "123",
-    reason: "",
-  },
-  {
-    id: 5,
-    driverName: "Miimz",
-    personalLicenseExpiry: "2017-10-10",
-    vehicleLicenseExpiry: "2017-10-15",
-    email: "test@test",
-    phoneNumber: "123",
-    reason: "",
-  },
-  {
-    id: 6,
-    driverName: "Miimz",
-    personalLicenseExpiry: "2017-10-10",
-    vehicleLicenseExpiry: "2017-10-15",
-    email: "test@test",
-    phoneNumber: "123",
-    reason: "",
-  },
-  {
-    id: 7,
-    driverName: "Miimz",
-    personalLicenseExpiry: "2017-10-10",
-    vehicleLicenseExpiry: "2017-10-15",
-    email: "test@test",
-    phoneNumber: "123",
-    reason: "",
-  },
-  {
-    id: 8,
-    driverName: "Miimz",
-    personalLicenseExpiry: "2017-10-10",
-    vehicleLicenseExpiry: "2017-10-15",
-    email: "test@test",
-    phoneNumber: "123",
-    reason: "",
-  },
-  {
-    id: 9,
-    driverName: "Miimz",
-    personalLicenseExpiry: "2017-10-10",
-    vehicleLicenseExpiry: "2017-10-15",
-    email: "test@test",
-    phoneNumber: "123",
-    reason: "",
-  },
-
-  // Add more fake data as needed
-];
+import useDrivers from "./useDrivers";
+import Spinner from "../../ui/Spinner";
+import Empty from "../../ui/Empty";
 
 function DriversTable() {
   const [searchParams] = useSearchParams();
 
-  return searchParams.get("status") === "Blocked" ? (
-    <Table columns="1fr 1fr 1fr 1fr 1fr 1fr">
-      <Table.TableNav title="Recent Rides" />
+  const { isLoading, drivers, count } = useDrivers();
+
+  // Show the loading spinner while the data is being fetched
+  if (isLoading) return <Spinner />;
+
+  // Show an empty state if there are no drivers to display
+  if (!drivers.length) return <Empty resourceName="drivers" />;
+
+  // Check the status in the query parameters
+  const isBlocked = searchParams.get("status") === "Blocked";
+
+  // Set columns based on the status
+  const columns = isBlocked
+    ? "0.8fr 0.8fr 1.4fr 1fr 1fr 1fr"
+    : "1fr 1fr 1fr 1fr 1fr";
+
+  return (
+    <Table columns={columns}>
+      <Table.TableNav title="Driver Table" tableData={drivers} />
 
       <Table.Header>
         <div>Driver Name</div>
-        <div>Reason</div>
-        <div>personal License Expiry</div>
+        {isBlocked && <div>Reason</div>}
+        <div>Personal License Expiry</div>
         <div>Vehicle License Expiry</div>
         <div>Email</div>
         <div>Phone Number</div>
       </Table.Header>
 
       <Table.Body
-        data={fakeData}
-        render={(item) => <DriversRow userInfo={item} key={item.id} />}
+        data={drivers}
+        render={(driver) => <DriversRow driverInfo={driver} key={driver.id} />}
       />
 
       <Table.Footer>
-        <Pagination count={fakeData.length} />
-      </Table.Footer>
-    </Table>
-  ) : (
-    <Table columns="1fr 1fr 1fr 1fr 1fr">
-      <Table.TableNav title="Recent Rides" />
-
-      <Table.Header>
-        <div>Driver Name</div>
-        <div>personal License Expiry</div>
-        <div>Vehicle License Expiry</div>
-        <div>Email</div>
-        <div>Phone Number</div>
-      </Table.Header>
-
-      <Table.Body
-        data={fakeData}
-        render={(item) => <DriversRow userInfo={item} key={item.id} />}
-      />
-
-      <Table.Footer>
-        <Pagination count={fakeData.length} />
+        <Pagination count={count} />
       </Table.Footer>
     </Table>
   );

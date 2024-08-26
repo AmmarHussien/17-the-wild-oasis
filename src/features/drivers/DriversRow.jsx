@@ -1,52 +1,54 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Table from "../../ui/Table";
 
-function DriversRow({ userInfo }) {
-  const navigete = useNavigate();
+function DriversRow({ driverInfo }) {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const {
-    driverName,
-    personalLicenseExpiry,
-    vehicleLicenseExpiry,
-    email,
-    phoneNumber,
-    reason,
-    id,
-  } = userInfo;
 
   function handleClick() {
-    searchParams.get("status") === "Pending"
-      ? navigete(`/driver-pending-information/${id}`)
-      : navigete(`/driver-information/${id}`);
-    // Add your click handling logic here
+    const status = searchParams.get("status");
+
+    // Navigate based on status
+    if (status === "All" || status === null) {
+    } else if (status === "Pending") {
+      navigate(`/driver-pending-information/${driverInfo.id}`);
+    } else {
+      navigate(`/driver-information/${driverInfo.id}`);
+    }
+
+    // Update search parameters in the URL
   }
 
-  return searchParams.get("status") === "Blocked" ? (
-    <Table columns="1fr 1fr 1fr 1fr 1fr 1fr">
+  const columns =
+    searchParams.get("status") === "Blocked"
+      ? "0.8fr 0.8fr 1.4fr 1fr 1fr 1fr"
+      : "1fr 1fr 1fr 1fr 1fr";
+
+  return (
+    <Table columns={columns}>
       <Table.Row>
-        <div onClick={handleClick} style={{ cursor: "pointer" }}>
-          {driverName}
-        </div>
-        {reason === "" ? <div>N/A</div> : <div>{reason}</div>}
-        <div>{personalLicenseExpiry}</div>
-        <div>{vehicleLicenseExpiry}</div>
-        <div>{email}</div>
-        <div>{phoneNumber}</div>
-      </Table.Row>
-    </Table>
-  ) : (
-    <Table columns="1fr 1fr 1fr 1fr 1fr ">
-      <Table.Row>
-        <div onClick={handleClick} style={{ cursor: "pointer" }}>
-          {driverName}
-        </div>
-        <div>{personalLicenseExpiry}</div>
-        <div>{email}</div>
-        <div>{vehicleLicenseExpiry}</div>
-        <div>{phoneNumber}</div>
+        {searchParams.get("status") === "All" ||
+        searchParams.get("status") === null ? (
+          <div>{driverInfo.full_name}</div>
+        ) : (
+          <div onClick={handleClick} style={{ cursor: "pointer" }}>
+            {driverInfo.full_name}
+          </div>
+        )}
+
+        {searchParams.get("status") === "Blocked" && (
+          <div>
+            {driverInfo.blocked_reason === ""
+              ? "N/A"
+              : driverInfo.blocked_reason}
+          </div>
+        )}
+        <div>{driverInfo.full_name}</div>
+        <div>{driverInfo.full_name}</div>
+        <div>{driverInfo.email}</div>
+        <div>{driverInfo.phone}</div>
       </Table.Row>
     </Table>
   );
 }
-
 export default DriversRow;

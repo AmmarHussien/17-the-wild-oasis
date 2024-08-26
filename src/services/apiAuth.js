@@ -1,34 +1,36 @@
 import axios from "axios";
-import supabase, { supabaseUrl } from "./supabase";
 
 const URL = "https://route-service.app/dashboard-api/v1/";
 
-// export async function signup({ fullName, email, password }) {
-//   const { data, error } = await supabase.auth.signUp({
-//     email,
-//     password,
+export async function logout() {
+  const token = localStorage.getItem("authToken");
 
-//     options: {
-//       data: {
-//         fullName,
-//         avatar: "",
-//       },
-//     },
-//   });
-//   if (error) throw new Error(error.message);
+  try {
+    const response = await axios.post(
+      `${URL}logout`,
+      {},
+      {
+        headers: {
+          ApiToken: `Bearer ${token}`,
+        },
+      }
+    );
 
-//   return data;
-// }
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        "logout failed due to an unexpected error"
+    );
+  }
+}
 
 export async function login({ email, password }) {
   try {
-    const response = await axios.post(
-      `https://route-service.app/dashboard-api/v1/login`,
-      {
-        email,
-        password,
-      }
-    );
+    const response = await axios.post(`${URL}login`, {
+      email: email,
+      password: password,
+    });
 
     if (response && response.data) {
       // Assuming the response contains a token
@@ -49,22 +51,22 @@ export async function login({ email, password }) {
 }
 
 export async function getCurrentUser() {
-  const { data: session } = await supabase.auth.getSession();
+  const { data: session } = localStorage.getItem("authToken");
 
   if (!session.session) return null;
 
-  const { data, error } = await supabase.auth.getUser();
+  const { data, error } = localStorage.getItem("authToken");
 
   if (error) throw new Error(error.message);
 
   return data?.user;
 }
 
-export async function logout() {
-  const { error } = await supabase.auth.signOut();
+// export async function logout() {
+//   const { error } = await supabase.auth.signOut();
 
-  if (error) throw new Error(error.message);
-}
+//   if (error) throw new Error(error.message);
+// }
 
 // export async function updateCurrentUser({ password, fullName, avatar }) {
 //   // 1. update password or username

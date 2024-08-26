@@ -4,7 +4,6 @@ const StyledFormRow = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   gap: 0.8rem;
   padding: 1.2rem 0;
 `;
@@ -18,9 +17,9 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function FormRowVertical({ label, error, children }) {
+function FormRowVertical({ label, error, children, $sx }) {
   return (
-    <StyledFormRow>
+    <StyledFormRow $sx={$sx}>
       {label && <Label htmlFor={children.props.id}>{label}</Label>}
       {children}
       {error && <Error>{error}</Error>}

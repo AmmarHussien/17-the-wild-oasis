@@ -34,6 +34,7 @@ import DriverPendingInformation from "./features/drivers/driver/DriverPendingInf
 import AddNewVehicle from "./features/vehicles/AddNewVehicle";
 import VehicleInformation from "./features/vehicles/vehicle/VehicleInformation";
 import RideInformation from "./features/rides/ride/RideInformation";
+import UserPendingInformation from "./features/users/user/UserPendingInformarion";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -64,14 +65,18 @@ function App() {
             />
             <Route path="/users" element={<Users />} />
             <Route path="/user-information/:Id" element={<UserInformation />} />
+            <Route
+              path="/user-pending-information/:Id"
+              element={<UserPendingInformation />}
+            />
             {/* //<Route path="/users/add-user" element={<AddUser />} /> */}
             <Route path="/drivers" element={<Drivers />} />
             <Route
-              path="/driver-information/:Id"
+              path="/driver-information/:userId"
               element={<DriverInformation />}
             />
             <Route
-              path="/driver-pending-information/:Id"
+              path="/driver-pending-information/:userId"
               element={<DriverPendingInformation />}
             />
             <Route path="/rides" element={<Rides />} />

@@ -8,27 +8,7 @@ import TextField from "@mui/material/TextField";
 import { IconButton, InputAdornment } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import Checkbox from "../../ui/Checkbox";
 import styled from "styled-components";
-import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
-
-const Box = styled.div`
-  padding: 25px 0px;
-  display: flex;
-
-  gap: 10px;
-  flex: 1;
-  justify-content: space-between;
-`;
-
-const P = styled.p`
-  color: red;
-`;
-
-const FooterP = styled.p`
-  margin: 20px 0;
-  color: #d3cbcb;
-`;
 
 const StyledFormRow = styled.div`
   display: flex;
@@ -49,8 +29,8 @@ const Button = styled.button`
 `;
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [showPassword, setShowPassword] = useState(false);
 
   const { login, isLoading } = useLogin();
@@ -60,16 +40,15 @@ function LoginForm() {
 
     if (!email || !password) return;
 
-    login(email, password);
-    // login(
-    //   { email, password },
-    //   {
-    //     onSettled: () => {
-    //       setEmail("");
-    //       setPassword("");
-    //     },
-    //   }
-    // );
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      }
+    );
   }
 
   const handleClick = () => {
@@ -129,24 +108,11 @@ function LoginForm() {
         />
       </FormRowVertical>
 
-      <Box>
-        <Checkbox checked={""} onChange={() => {}}>
-          Remember me
-        </Checkbox>
-        <P>Forget password? </P>
-      </Box>
-
       <StyledFormRow>
         <Button disabled={isLoading}>
           {!isLoading ? "log in" : <SpinnerMini />}
         </Button>
       </StyledFormRow>
-      <FooterP>
-        Report a problem {"    "}
-        <span>
-          <ReportGmailerrorredIcon sx={{ fontSize: 20 }} />
-        </span>
-      </FooterP>
     </Form>
   );
 }

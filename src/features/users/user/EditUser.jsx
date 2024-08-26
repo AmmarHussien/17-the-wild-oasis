@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
-
-import AddIcon from "@mui/icons-material/Add";
+import { EditSharp } from "@mui/icons-material";
 import Modal from "../../../ui/Modal";
 import EditUserForm from "./EditUserForm";
 
@@ -8,10 +7,10 @@ function EditUser() {
   return (
     <div>
       <Modal>
-        <Modal.Open opens="user-form">
+        <Modal.Open opens="edit-user-form">
           <Button
             variant="contained"
-            startIcon={<AddIcon />}
+            startIcon={<EditSharp />}
             sx={{
               width: 139,
               height: 56,
@@ -24,7 +23,7 @@ function EditUser() {
             Edit
           </Button>
         </Modal.Open>
-        <Modal.Window name="user-form">
+        <Modal.Window name="edit-user-form">
           <EditUserForm />
         </Modal.Window>
       </Modal>

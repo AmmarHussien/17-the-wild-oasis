@@ -1,12 +1,16 @@
 import styled, { css } from "styled-components";
 import { useMoveBack } from "../../../hooks/useMoveBack";
 import ButtonText from "../../../ui/ButtonText";
-import UsersRecentRideTable from "../../users/user/UserRecentRideTable";
 import EditDriver from "./EditDriver";
 import DriverComplainsTable from "./DriverComplainsTable";
 import BlockDriver from "./BlockDriver";
 import InformationItemTable from "./InformationItemTable";
 import InternalNotes from "../../../ui/internalNotes/InternalNotes";
+import useDriver from "./useDriver";
+import { useParams } from "react-router-dom";
+import Spinner from "../../../ui/Spinner";
+import DriverInformationWithImage from "./DriverInformationWithImage";
+import RecentRideTable from "./RecentRideTable";
 
 const ActivityData = {
   CreditBalance: 1500,
@@ -16,14 +20,6 @@ const ActivityData = {
   TotalPoints: 100,
 };
 
-const DriverData = {
-  Name: "John Doe",
-  email: "Toyota Camry",
-  mobile: "ABC-1234",
-  idNumber: "123-456-7890",
-  licenseExpiryDate: "2026-05-01",
-  joiningDate: "2026-05-01",
-};
 function DriverInformation() {
   const Row = styled.div`
     display: flex;
@@ -46,11 +42,30 @@ function DriverInformation() {
   `;
   const moveBack = useMoveBack();
   //const navigete = useNavigate();
+
+  const { userId } = useParams(); // Extract userId from the URL
+
+  const { isLoading, driverData } = useDriver(userId);
+
+  if (isLoading) return <Spinner />;
+
+  const {
+    full_name,
+    email,
+    phone,
+    national_id,
+    driver_license,
+    created_at,
+    profile_image,
+    notes,
+    rides,
+  } = driverData;
+
   return (
     <>
       <Row type="horizontal">
         <Row type="vertical">
-          <ButtonText onClick={moveBack}>&larr; Drivers</ButtonText>
+          <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
           <h1>Driver Information</h1>
         </Row>
         <Row type="horizontal">
@@ -60,15 +75,26 @@ function DriverInformation() {
       </Row>
 
       <Row>
-        <InformationItemTable data={DriverData} title="Drivers's Info" />
+        <DriverInformationWithImage
+          data={{
+            userName: full_name,
+            email: email,
+            mobileNumber: phone,
+            profileImage: profile_image,
+            nationalId: national_id,
+            driverLicense: driver_license,
+            joiningDate: created_at,
+          }}
+          title="Drivers's Info"
+        />
         <InformationItemTable data={ActivityData} title="Activities Info" />
       </Row>
 
-      <UsersRecentRideTable />
+      <RecentRideTable rides={rides} />
 
       <DriverComplainsTable />
 
-      <InternalNotes />
+      <InternalNotes notes={notes} />
     </>
   );
 }

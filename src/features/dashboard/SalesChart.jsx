@@ -11,9 +11,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 //import { UseDarkMode } from "../../context/DarkModeContext";
-import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
+import { eachDayOfInterval, endOfMonth, format, startOfMonth } from "date-fns";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import { useEffect, useState } from "react";
+import useRevenues from "./useRevenues";
 
 const StyledSalesChart = styled(DashboardBox)`
   padding: 3.2rem;
@@ -31,7 +33,7 @@ const StyledSalesChart = styled(DashboardBox)`
   padding: 24px 16.18px 55.96px 16px;
   gap: 0px;
   border-radius: 24px;
-  opacity: 0px;
+  opacity: 1px;
   box-shadow: 0px 4px 15px 0px #27242414;
 
   grid-column: 1 / -1;
@@ -49,7 +51,6 @@ const StyledSalesChartHeader = styled.div`
   left: 16px;
   display: flex;
   justify-content: space-between;
-  opacity: 0px;
   margin-bottom: 10px;
 `;
 
@@ -66,28 +67,87 @@ const StyledSalesChartHeaderRight = styled.div`
   justify-content: end;
   align-items: center;
   gap: 8px;
-  opacity: 0px;
 `;
 
-function SalesChart({ bookings, numDays }) {
+function SalesChart() {
   //const { isDarkMode } = UseDarkMode();
 
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const { revenues } = useRevenues(
+    format(currentMonth, "yyyy"),
+    format(currentMonth, "MM")
+  );
+
+  console.log("SalesChart", revenues);
+
+  // Calculate the start and end dates for the current month
+  const startOfCurrentMonth = startOfMonth(currentMonth);
+  const endOfCurrentMonth = endOfMonth(currentMonth);
+
+  // Generate a list of all dates in the current month
   const allDates = eachDayOfInterval({
-    start: subDays(new Date(), numDays - 1),
-    end: new Date(),
+    start: startOfCurrentMonth,
+    end: endOfCurrentMonth,
   });
 
-  const data = allDates.map((date) => {
-    return {
-      label: format(date, "MMM dd"),
-      totalSales: bookings
-        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
-        .reduce((acc, cur) => acc + cur.totalPrice, 0),
-      extrasSales: bookings
-        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
-        .reduce((acc, cur) => acc + cur.extrasPrice, 0),
-    };
+  const handlePrevMonth = () => {
+    setCurrentMonth((prevMonth) => {
+      const newMonth = new Date(prevMonth);
+      newMonth.setMonth(newMonth.getMonth() - 1);
+      return newMonth;
+    });
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth((prevMonth) => {
+      const newMonth = new Date(prevMonth);
+      newMonth.setMonth(newMonth.getMonth() + 1);
+
+      // Get the current date
+      const currentDate = new Date();
+
+      // If the new month is greater than the current month, do not update
+      if (newMonth > currentDate) {
+        return prevMonth; // Return the previous month, no update
+      }
+
+      return newMonth;
+    });
+  };
+  const monthName = currentMonth.toLocaleString("default", {
+    month: "long",
+    year: "numeric",
   });
+
+  useEffect(() => {
+    console.log(currentMonth);
+  }, [currentMonth]);
+
+  const data = allDates
+    .filter(
+      (date) => format(date, "MMM yyyy") === format(currentMonth, "MMM yyyy")
+    )
+    .map((date) => {
+      const formattedDate = format(date, "MMM dd");
+      return {
+        label: formattedDate,
+        totalRevenues: revenues
+          .filter(
+            (booking) =>
+              format(new Date(booking.drop_off_date), "MMM dd") ===
+              formattedDate
+          ) // assuming the year 2024
+          .reduce((acc, cur) => acc + cur.total, 0),
+        // extrasSales: bookings
+        //   .filter(
+        //     (booking) =>
+        //       format(new Date(booking.created_at + " 2024"), "MMM dd") ===
+        //       formattedDate
+        //   ) // assuming the year 2024
+        //   .reduce((acc, cur) => acc + cur.extrasPrice, 0),
+      };
+    });
 
   // const colors = isDarkMode
   //   ? {
@@ -105,7 +165,7 @@ function SalesChart({ bookings, numDays }) {
 
   const colors = {
     totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
-    extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
+    //extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
     text: "#374151",
     background: "#fff",
   };
@@ -122,13 +182,14 @@ function SalesChart({ bookings, numDays }) {
 
         <StyledSalesChartHeaderRight>
           <KeyboardArrowLeftIcon
+            onClick={handlePrevMonth}
             sx={{
               fontSize: "50px",
             }}
           />
-
-          <Heading as="h7"> Oct </Heading>
+          <Heading as="h7"> {monthName} </Heading>
           <ChevronRightIcon
+            onClick={handleNextMonth}
             sx={{
               fontSize: "50px",
             }}
@@ -154,15 +215,15 @@ function SalesChart({ bookings, numDays }) {
             }}
           />
           <Area
-            dataKey="totalSales"
+            dataKey="totalRevenues"
             type="monotone"
             stroke={colors.totalSales.stroke}
             fill={colors.totalSales.fill}
             strokeWidth={2}
-            name="Total Sales"
+            name="Total Revenues"
             unit="$"
           />
-          <Area
+          {/* <Area
             dataKey="extrasSales"
             type="monotone"
             stroke={colors.extrasSales.stroke}
@@ -170,7 +231,7 @@ function SalesChart({ bookings, numDays }) {
             strokeWidth={2}
             name="Extras Sales"
             unit="$"
-          />
+          /> */}
         </AreaChart>
       </ResponsiveContainer>
     </StyledSalesChart>

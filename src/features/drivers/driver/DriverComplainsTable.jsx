@@ -28,7 +28,7 @@ const fakeData = [
 function DriverComplainsTable() {
   return (
     <Table columns="1fr 1fr 1fr 1fr 1fr 1fr">
-      <Table.TableNav title="Complains" />
+      <Table.TableNaView title="Complains" />
       <Table.Header>
         <div>Driver Name</div>
         <div>Destination A</div>

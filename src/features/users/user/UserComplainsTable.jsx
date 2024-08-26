@@ -19,7 +19,7 @@ const fakeData = [
     destinationB: "helwan",
     date: "2017-12-12",
     price: "300",
-    status: "On Going",
+    status: "ongoing",
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const fakeData = [
     destinationB: "helwan",
     date: "2017-12-12",
     price: "300",
-    status: "On Going",
+    status: "ongoing",
   },
   {
     id: 4,
@@ -37,16 +37,15 @@ const fakeData = [
     destinationB: "helwan",
     date: "2017-12-12",
     price: "300",
-    status: "On Going",
+    status: "ongoing",
   },
-
   // Add more fake data as needed
 ];
 
 function UserComplainsTable() {
   return (
     <Table columns="1fr 1fr 1fr 1fr 1fr 1fr">
-      <Table.TableNav title="Complains" />
+      <Table.TableNaView title="Complains" />
       <Table.Header>
         <div>Driver Name</div>
         <div>Destination A</div>

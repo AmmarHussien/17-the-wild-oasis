@@ -62,12 +62,12 @@ function MainNav() {
             <span>Dashboard</span>
           </StyledNavLink>
         </li>
-        <li>
+        {/* <li>
           <StyledNavLink to="/car-services">
             <HiOutlineCalendarDays />
             <span>Car Services</span>
           </StyledNavLink>
-        </li>
+        </li> */}
         <li>
           <StyledNavLink to="/users">
             <HiOutlineUsers />
@@ -86,7 +86,7 @@ function MainNav() {
             <span>Rides</span>
           </StyledNavLink>
         </li>
-        <li>
+        {/* <li>
           <StyledNavLink to="/vehicles">
             <HiOutlineCog6Tooth />
             <span>Vehicles</span>
@@ -133,7 +133,7 @@ function MainNav() {
             <HiOutlineCog6Tooth />
             <span>Customisation</span>
           </StyledNavLink>
-        </li>
+        </li> */}
       </NavList>
     </nav>
   );

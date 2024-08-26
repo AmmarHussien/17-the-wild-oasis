@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
 
-import AddIcon from "@mui/icons-material/Add";
 import Modal from "../../../ui/Modal";
 import EditDriverForm from "./EditDriverForm";
+import { EditSharp } from "@mui/icons-material";
 
 function EditDriver() {
   return (
@@ -11,7 +11,7 @@ function EditDriver() {
         <Modal.Open opens="user-form">
           <Button
             variant="contained"
-            startIcon={<AddIcon />}
+            startIcon={<EditSharp />}
             sx={{
               width: 139,
               height: 56,

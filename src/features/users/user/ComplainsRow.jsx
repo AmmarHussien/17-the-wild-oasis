@@ -2,6 +2,26 @@ import { useNavigate } from "react-router-dom";
 import Table from "../../../ui/Table";
 import styled, { css } from "styled-components";
 
+const StatusDiv = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["even"].includes(prop),
+})`
+  ${(props) =>
+    props.status === "ongoing" &&
+    css`
+      color: #fe9e46;
+    `}
+  ${(props) =>
+    props.status === "completed" &&
+    css`
+      color: #20c992;
+    `}
+  ${(props) =>
+    props.status === "cancelled" &&
+    css`
+      color: #fc5555;
+    `}
+`;
+
 function ComplainsRow({ userInfo }) {
   const navigete = useNavigate();
 
@@ -21,24 +41,6 @@ function ComplainsRow({ userInfo }) {
     // Add your click handling logic here
   }
 
-  const Div = styled.div`
-    ${(props) =>
-      props.as === "ongoing" &&
-      css`
-        color: #fe9e46;
-      `}
-    ${(props) =>
-      props.as === "completed" &&
-      css`
-        color: #20c992;
-      `}
-      ${(props) =>
-      props.as === "cancelled" &&
-      css`
-        color: #fc5555;
-      `}
-  `;
-
   return (
     <Table columns="1fr 1fr 1fr 1fr 1fr 1fr">
       <Table.Row>
@@ -49,11 +51,9 @@ function ComplainsRow({ userInfo }) {
         <div>{destinationB}</div>
         <div>{date}</div>
         <div>{price}</div>
-        {status === "On Going" ? (
-          <Div as="ongoing">{status}</Div>
-        ) : status === "completed" ? (
-          <Div as="completed">{status}</Div>
-        ) : null}
+        <StatusDiv status={status} even>
+          {status}
+        </StatusDiv>
       </Table.Row>
     </Table>
   );

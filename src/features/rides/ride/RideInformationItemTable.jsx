@@ -65,7 +65,7 @@ function RideInformationItemTable({ title, data }) {
               <Value>{value}</Value>
             </RowItem>
           ) : (
-            <IMG src={value} alt="003" />
+            <IMG src={value} alt="" />
           )
         )}
       </Table>

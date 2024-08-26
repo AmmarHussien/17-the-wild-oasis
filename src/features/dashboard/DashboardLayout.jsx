@@ -1,14 +1,12 @@
 import styled from "styled-components";
-import { useRecentBookings } from "./useRecentBookings";
 import Spinner from "../../ui/Spinner";
-import { useRecentStays } from "./useRecentStays";
 import Stats from "./stats";
-import useCabins from "../cabins/useCabins";
-import SalesChart from "./SalesChart";
 
 import RidesStatistics from "./Statistics";
 import RecentRide from "./ResentRide.jsx/RecentRide";
-
+import useStatistics from "./useStatisctics";
+import SalesChart from "./SalesChart";
+import useRevenues from "./useRevenues";
 const StyledDashboardLayout = styled.div`
   display: flex;
   flex-direction: row;
@@ -24,28 +22,21 @@ const SmallContainer = styled.div`
 `;
 
 function DashboardLayout() {
-  const { bookings, isLoading: isLoadingBookings } = useRecentBookings();
-  const {
-    //confirmedStays,
-    isLoading: isLoadingStays,
-    numDays,
-  } = useRecentStays();
+  const { statistics, isLoading } = useStatistics();
 
-  const { isLoading: isLoadingCabins } = useCabins();
-
-  if (isLoadingBookings || isLoadingStays || isLoadingCabins)
-    return <Spinner />;
+  if (isLoading) return <Spinner />;
 
   return (
     <>
       <StyledDashboardLayout>
-        <Stats totalUser="1000" totalDrivers="150" totalVehicles="150" />
-
-        {/* <TodayActivity />
-          <DurationChart confirmedStays={confirmedStays} /> */}
+        <Stats
+          totalUser={statistics.totalUsersCount}
+          totalDrivers={statistics.totalDriversCount}
+          totalVehicles={statistics.totalVehiclesCount}
+        />
       </StyledDashboardLayout>
       <SmallContainer>
-        {/* <SalesChart bookings={bookings} numDays={numDays} /> */}
+        <SalesChart />
         <RidesStatistics />
       </SmallContainer>
       <RecentRide />

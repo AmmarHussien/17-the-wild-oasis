@@ -1,7 +1,7 @@
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { PAGE_SIZE } from "../utils/constants";
+import { useState } from "react";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -61,12 +61,26 @@ const PaginationButton = styled.button`
 
 function Pagination({ count }) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [pageSize, setPageSize] = useState(() => {
+    // Initialize pageSize from searchParams or default to 5
+    return Number(searchParams.get("per_page")) || 10;
+  });
+
+  // Update pageSize and query parameters
+  const handlePageSizeChange = (newPerPage) => {
+    setPageSize(newPerPage);
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set("per_page", newPerPage);
+      return newParams;
+    });
+  };
 
   const currentPage = !searchParams.get("page")
     ? 1
     : Number(searchParams.get("page"));
 
-  const pageCount = Math.ceil(count / PAGE_SIZE);
+  const pageCount = Math.ceil(count / pageSize);
 
   function nextPage() {
     const next = currentPage === pageCount ? currentPage : currentPage + 1;
@@ -82,28 +96,50 @@ function Pagination({ count }) {
     setSearchParams(searchParams);
   }
 
-  if (pageCount <= 1) return null;
+  if (count < 1) return null;
 
   return (
     <StyledPagination>
       <P>
-        Showing <span>{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
+        Showing <span>{(currentPage - 1) * pageSize + 1}</span> to{" "}
         <span>
-          {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
+          {currentPage === pageCount ? count : currentPage * pageSize}
         </span>{" "}
         of <span>{count}</span> results
+        <span>
+          {" "}
+          <label htmlFor="pageSize">Page Size: </label>{" "}
+          <input
+            id="pageSize"
+            type="number"
+            value={pageCount > 1 ? pageSize : count}
+            onChange={(e) => handlePageSizeChange(Number(e.target.value))}
+            min="1"
+            style={{
+              padding: "4px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              fontSize: "14px",
+              width: "40px",
+              boxSizing: "border-box",
+              marginRight: "10px",
+            }}
+          />
+        </span>
       </P>
-      <Buttons>
-        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
-          <HiChevronLeft /> <span> Previous </span>
-        </PaginationButton>
-        <PaginationButton
-          onClick={nextPage}
-          disabled={currentPage === pageCount}
-        >
-          <span> Next </span> <HiChevronRight />
-        </PaginationButton>
-      </Buttons>
+      {pageCount > 1 ? (
+        <Buttons>
+          <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
+            <HiChevronLeft /> <span> Previous </span>
+          </PaginationButton>
+          <PaginationButton
+            onClick={nextPage}
+            disabled={currentPage === pageCount}
+          >
+            <span> Next </span> <HiChevronRight />
+          </PaginationButton>
+        </Buttons>
+      ) : null}
     </StyledPagination>
   );
 }

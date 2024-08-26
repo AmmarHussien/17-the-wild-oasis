@@ -17,8 +17,17 @@ const Form = styled.form`
     css`
       width: 80rem;
     `}
-    
-  overflow: hidden;
+
+    ${(props) =>
+    props.type === "grid" &&
+    css`
+      display: grid;
+      width: 70rem;
+      grid-template-columns: repeat(2, 1fr); // Creates two equal-width columns
+      gap: 1rem; // Adds space between grid items (optional)
+    `}
+    overflow: visible;
+
   font-size: 1.4rem;
 `;
 

@@ -1,91 +1,104 @@
 import styled, { css } from "styled-components";
 import ButtonText from "../../../ui/ButtonText";
 import { useMoveBack } from "../../../hooks/useMoveBack";
-//import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
 import UsersRecentRideTable from "./UserRecentRideTable";
 import UserComplainsTable from "./UserComplainsTable";
 import InformationItemTable from "./InformationItemTable";
 import EditUser from "./EditUser";
-import useUserInfo from "../useUserInfo";
+import useUser from "../useUserInfo";
 import Spinner from "../../../ui/Spinner";
 import Empty from "../../../ui/Empty";
-import useUserActivity from "../useUserActivity";
+import UserInformationWithImage from "./UserInformationWithImage";
+import BlockUser from "./BlockUser";
+import Unblock from "./Unblock";
+
+const Row = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["even"].includes(prop),
+})`
+  display: flex;
+  ${(props) =>
+    props.type === "horizontal" &&
+    css`
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    `}
+  ${(props) =>
+    props.type === "vertical" &&
+    css`
+      flex-direction: column;
+      align-items: start;
+    `}
+  ${(props) =>
+    props.even &&
+    css`
+      background-color: #f0f0f0;
+    `}
+`;
 
 function UserInformation() {
-  const { userInfo, isLoading1 } = useUserInfo();
-  const { userActivity, isLoading } = useUserActivity();
-
   const moveBack = useMoveBack();
 
-  console.log(userActivity);
+  const { userInfo, isLoading: userInfoLoading } = useUser();
 
-  if (isLoading1 || isLoading) return <Spinner />;
+  if (userInfoLoading) return <Spinner />;
 
   if (!userInfo) return <Empty resource="users" />;
 
-  const Row = styled.div`
-    display: flex;
+  const {
+    full_name,
+    email,
+    rides,
+    phone,
+    created_at,
+    rate,
+    balance,
+    status,
+    currency,
+    car: {
+      manufacture: { manufacture },
+      model: { model },
+      registration_year,
+    },
+  } = userInfo;
 
-    ${(props) =>
-      props.type === "horizontal" &&
-      css`
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-      `}
-
-    ${(props) =>
-      props.type === "vertical" &&
-      css`
-        flex-direction: column;
-        //gap: 1.6rem;
-        align-items: start;
-      `}
-  `;
-
-  //const navigete = useNavigate();
   return (
     <>
-      <Row type="horizontal">
+      <Row type="horizontal" even={false}>
         <Row type="vertical">
-          <ButtonText onClick={moveBack}>&larr; Users</ButtonText>
+          <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
           <h1>User Information</h1>
         </Row>
         <Row type="horizontal">
           <EditUser />
-          <Button
-            onClick={() => {
-              //navigate("/add-car-services");
-            }}
-            variant="contained"
-            //startIcon={<AddIcon />}
-            sx={{
-              width: 155,
-              height: 56,
-              borderRadius: 5,
-              fontSize: 12,
-              fontWeight: 600,
-              color: "#005379",
-              background: "#EFF6FF",
-              shadow: "0 4 60 0 #0038FF26",
-              "&:hover": {
-                background: "#EFF6FF",
-                boxShadow: "0 4px 60px 0 #0038FF26",
-              },
-            }}
-          >
-            Block
-          </Button>
+          {status === "Blocked" ? <Unblock /> : <BlockUser />}
         </Row>
       </Row>
 
       <Row>
-        <InformationItemTable data={userInfo} title="User's Info" />
-        <InformationItemTable data={userActivity} title="Activities Info" />
+        <UserInformationWithImage
+          even={true}
+          data={{
+            userName: full_name,
+            email: email,
+            MobileNumber: phone,
+            JoiningDate: created_at,
+          }}
+          title="User's Info"
+        />
+        <InformationItemTable
+          data={{
+            CarMake: manufacture,
+            CarModel: model,
+            registrationYear: registration_year,
+            TotalRating: rate,
+            WalletBalance: { balance, currency },
+          }}
+          title="Activities Info"
+        />
       </Row>
 
-      <UsersRecentRideTable />
+      <UsersRecentRideTable rides={rides} />
 
       <UserComplainsTable />
     </>

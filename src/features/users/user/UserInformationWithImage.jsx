@@ -43,7 +43,8 @@ const RowItem = styled.div`
   justify-content: space-between;
   padding: 10px;
   border-bottom: 1px solid #ddd;
-  background-color: ${(props) => (props.even ? "#f1f1f1" : "#f9f9f9")};
+
+  background-color: ${(props) => (props.$even ? "#f1f1f1" : "#f9f9f9")};
 `;
 const Label = styled.div`
   flex: 1;
@@ -90,34 +91,39 @@ function UserInformationWithImage({ data, title }) {
     <TableContainer>
       <Title>{title}</Title>
       <Table>
-        {Object.entries(data).map(([key, value], index, array) => (
-          <RowItem key={key} even={index % 2 === 1}>
-            {key === "userName" ? (
-              <Row type="horizontal">
-                <Avater>
-                  <p>
-                    {value
-                      .split(" ")
-                      .slice(0, 2)
-                      .map((name) => name[0])
-                      .join(" ")}
-                  </p>
-                </Avater>
-                <Row type="vertical">
-                  {value}
-                  {index < array.length - 1 && (
-                    <Text> {array[index + 1][1]}</Text>
-                  )}
+        {Object.entries(data).map(([key, value], index, array) => {
+          if (key === "email") return null;
+          return (
+            <RowItem key={key} $even={index % 2 === 1}>
+              {key === "userName" ? (
+                <Row type="horizontal">
+                  <Avater>
+                    <p>
+                      {
+                        value
+                          .split(" ") // Split the string into words
+                          .slice(0, 2) // Take the first two words
+                          .map((word) => word[0].toUpperCase()) // Get the first letter of each word and make it uppercase
+                          .join(" ") // Join the letters with a space
+                      }
+                    </p>
+                  </Avater>
+                  <Row type="vertical">
+                    {value}
+                    {index < array.length - 1 && (
+                      <Text> {array[index + 1][1]}</Text>
+                    )}
+                  </Row>
                 </Row>
-              </Row>
-            ) : (
-              <>
-                <Label>{key.replace(/([A-Z])/g, " $1")}</Label>
-                <Value>{value}</Value>
-              </>
-            )}
-          </RowItem>
-        ))}
+              ) : (
+                <>
+                  <Label>{key.replace(/([A-Z])/g, " $1")}</Label>
+                  <Value>{value}</Value>
+                </>
+              )}
+            </RowItem>
+          );
+        })}
       </Table>
     </TableContainer>
   );

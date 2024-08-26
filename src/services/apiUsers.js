@@ -1,67 +1,188 @@
-import { PAGE_SIZE } from "../utils/constants";
-import supabase from "./supabase";
+import axios from "axios";
 
-export async function getUsers({ filter, sortBy, page }) {
-  let query = supabase.from("users").select("*", {
-    count: "exact",
-  });
+const URL = "https://route-service.app/dashboard-api/v1/";
 
-  // filter
-  //if (filter != null) query = query.eq(filter.field, filter.value);
+export async function getAllUsers({ filter, page, sortBy, sortType, perPage }) {
+  const token = localStorage.getItem("authToken");
+  try {
+    // Prepare query parameters
+    const params = {
+      select: "*",
+    };
 
-  if (filter) query = query[filter.method || "eq"](filter.field, filter.value);
+    // Add filter parameters if provided
+    if (filter) {
+      params[filter.field] = filter.value;
+    }
 
-  //sort
+    //sort
 
-  if (sortBy)
-    query = query.order(sortBy.field, {
-      ascending: sortBy.direction === "asc",
+    // Add sorting parameters if provided
+    if (sortBy) {
+      params.sort_by = sortBy;
+      params.sort_type = sortType; // Assuming your API uses `sortType` for sorting order
+    }
+
+    // Add pagination parameters if provided
+    if (page) {
+      params.page = page;
+      params.per_page = perPage; // Assuming your API uses pageSize for pagination
+    }
+
+    // Make the API request
+    const response = await axios.get(`${URL}users`, {
+      headers: {
+        ApiToken: `Bearer ${token}`, // Corrected the header name to Authorization
+      },
+      params, // Pass the prepared query parameters
     });
 
-  //Pagenation
+    const data = response.data.data || [];
+    const count = response.data.meta.total; // Count the exact number of objects
 
-  if (page) {
-    const from = (page - 1) * PAGE_SIZE;
-    const to = from + (PAGE_SIZE - 1);
-    query = query.range(from, to);
+    return { data, error: null, count };
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        "Fetching Users failed due to an unexpected error"
+    );
   }
+}
+// /dashboard-api/v1/users?search_key=ALaa Ragab&status=Approved
 
-  const { data, error, count } = await query;
+export async function getSearch({
+  filter,
+  page,
+  searchKey,
+  sortBy,
+  sortType,
+  perPage,
+}) {
+  const token = localStorage.getItem("authToken");
+  try {
+    // Prepare query parameters
+    const params = {
+      select: "*",
+      count: "exact",
+    };
 
-  if (error) {
-    console.log(error);
-    throw new Error("Users could not be loaded");
+    // Add filter parameters if provided
+    if (filter) {
+      params[filter.field] = filter.value;
+    }
+    if (sortBy) {
+      params.sort_by = sortBy;
+      params.sort_type = sortType; // Assuming your API uses `sortType` for sorting order
+    }
+    // Add pagination parameters if provided
+    if (page) {
+      params.page = page;
+      params.per_page = perPage; // Assuming your API uses pageSize for pagination
+    }
+
+    // Make the API request
+    const response = await axios.get(`${URL}users?search_key=${searchKey}`, {
+      headers: {
+        ApiToken: `Bearer ${token}`, // Corrected the header name to Authorization
+      },
+      params, // Pass the prepared query parameters
+    });
+
+    const data = response.data.data || [];
+    const count = response.data.meta.total; // Count the exact number of objects
+
+    return { data, error: null, count };
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        "Fetching Users failed due to an unexpected error"
+    );
   }
-
-  return { data, count };
 }
 
-export async function getUserInfo(id) {
-  const { data, error } = await supabase
-    .from("users")
-    .select("name,email,phone_number,startDate")
-    .eq("id", id)
-    .single();
+export async function getUser(id) {
+  const token = localStorage.getItem("authToken");
+  try {
+    const response = await axios.get(`${URL}users/${id}`, {
+      headers: {
+        ApiToken: `Bearer ${token}`, // Corrected the header name to Authorization
+      },
+      // Pass the prepared query parameters
+    });
 
-  if (error) {
-    console.error(error);
-    throw new Error("User not found");
+    return response.data.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        "Fetching User failed due to an unexpected error"
+    );
   }
-
-  return data;
 }
 
-export async function getUserActivity(id) {
-  const { data, error } = await supabase
-    .from("users")
-    .select("car_make,car_model,model_year,rate,wallet_balance")
-    .eq("id", id)
-    .single();
+export async function addNewUser(formData) {
+  const token = localStorage.getItem("authToken");
 
-  if (error) {
-    console.error(error);
-    throw new Error("User not found");
+  try {
+    const response = await axios.post(`${URL}users`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        ApiToken: `Bearer ${token}`, // Corrected the header name to Authorization
+      },
+    });
+
+    return response.data.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        "Fetching Users failed due to an unexpected error"
+    );
   }
+}
 
-  return data;
+export async function editUser(id, formData) {
+  const token = localStorage.getItem("authToken");
+  console.log("Editing user with ID:", id);
+  console.log("Editing user with ID:", formData);
+
+  try {
+    const response = await axios.put(`${URL}users/${id}`, formData, {
+      headers: {
+        ApiToken: `Bearer ${token}`, // Corrected the header name to Authorization
+      },
+      // Pass the prepared query parameters
+    });
+
+    return response.data.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        "Fetching User failed due to an unexpected error"
+    );
+  }
+}
+
+export async function updateStatus(id, reason, status) {
+  const token = localStorage.getItem("authToken");
+  try {
+    const response = await axios.put(
+      `${URL}users/${id}/status/update`,
+      {
+        status: status,
+        blocked_reason: reason,
+      },
+      {
+        headers: {
+          ApiToken: `Bearer ${token}`, // Corrected the header name to Authorization
+        },
+        // Pass the prepared query parameters
+      }
+    );
+
+    return response.data.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        "Fetching User failed due to an unexpected error"
+    );
+  }
 }

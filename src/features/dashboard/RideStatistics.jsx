@@ -4,6 +4,7 @@ import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
 import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined";
 import CancelPresentationOutlinedIcon from "@mui/icons-material/CancelPresentationOutlined";
 import StatistecsItem from "./StatistecsItem";
+import useStatistics from "./useStatisctics";
 
 const StyledTextContainer = styled.div`
   top: 16px;
@@ -32,6 +33,7 @@ const VerticalDivider = styled.div`
   margin: 0 10px; // Adjust margin as needed
 `;
 function RideStatistics() {
+  const { statistics } = useStatistics();
   return (
     <>
       <StyledTextContainer>
@@ -49,9 +51,9 @@ function RideStatistics() {
               }}
             />
           }
-          title={"complete"}
+          title={"Complete"}
           color="#20C992"
-          statistecs={150}
+          statistecs={statistics.completedRides}
         />
         <VerticalDivider />
         <StatistecsItem
@@ -62,9 +64,9 @@ function RideStatistics() {
               }}
             />
           }
-          title={"ongoing"}
+          title={"Ongoing"}
           color="#EAB308"
-          statistecs={150}
+          statistecs={statistics.ongoingRides}
         />
         <VerticalDivider />
         <StatistecsItem
@@ -77,7 +79,7 @@ function RideStatistics() {
           }
           title={"Cancelled"}
           color="#FC5555"
-          statistecs={150}
+          statistecs={statistics.cancelledRides}
         />
       </StyledContentContainer>
     </>

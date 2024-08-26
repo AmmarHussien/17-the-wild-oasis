@@ -33,7 +33,7 @@ function LoginLogo() {
   return (
     <Box>
       <StyledFormRow>
-        <Image src="public/logo-dark.png" alt="" />
+        <Image src="/Logo.svg" alt="" />
         <Heading as="loginPageHeader">Welcom To Route Admin Panel</Heading>
         <Heading as="h4">
           Login now to manage you account and check your pending request
