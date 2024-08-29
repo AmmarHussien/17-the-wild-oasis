@@ -6,7 +6,6 @@ import RidesStatistics from "./Statistics";
 import RecentRide from "./ResentRide.jsx/RecentRide";
 import useStatistics from "./useStatisctics";
 import SalesChart from "./SalesChart";
-import useRevenues from "./useRevenues";
 const StyledDashboardLayout = styled.div`
   display: flex;
   flex-direction: row;

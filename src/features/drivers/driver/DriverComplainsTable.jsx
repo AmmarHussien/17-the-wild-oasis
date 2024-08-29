@@ -10,7 +10,7 @@ const fakeData = [
     destinationB: "helwan",
     date: "2017-12-12",
     price: "300",
-    status: "completed",
+    status: "Completed",
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const fakeData = [
     destinationB: "helwan",
     date: "2017-12-12",
     price: "300",
-    status: "completed",
+    status: "Completed",
   },
 
   // Add more fake data as needed

@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import Spinner from "../../../ui/Spinner";
 import DriverInformationWithImage from "./DriverInformationWithImage";
 import RecentRideTable from "./RecentRideTable";
+import Unblock from "./Unblock";
 
 const ActivityData = {
   CreditBalance: 1500,
@@ -20,26 +21,31 @@ const ActivityData = {
   TotalPoints: 100,
 };
 
+const Row = styled.div.withConfig({
+  shouldForwardProp: (prop) => !["even"].includes(prop),
+})`
+  display: flex;
+  ${(props) =>
+    props.type === "horizontal" &&
+    css`
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    `}
+  ${(props) =>
+    props.type === "vertical" &&
+    css`
+      flex-direction: column;
+      align-items: start;
+    `}
+  ${(props) =>
+    props.even &&
+    css`
+      background-color: #f0f0f0;
+    `}
+`;
+
 function DriverInformation() {
-  const Row = styled.div`
-    display: flex;
-
-    ${(props) =>
-      props.type === "horizontal" &&
-      css`
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-      `}
-
-    ${(props) =>
-      props.type === "vertical" &&
-      css`
-        flex-direction: column;
-        //gap: 1.6rem;
-        align-items: start;
-      `}
-  `;
   const moveBack = useMoveBack();
   //const navigete = useNavigate();
 
@@ -59,23 +65,25 @@ function DriverInformation() {
     profile_image,
     notes,
     rides,
+    status,
   } = driverData;
 
   return (
     <>
-      <Row type="horizontal">
+      <Row type="horizontal" even={false}>
         <Row type="vertical">
           <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
           <h1>Driver Information</h1>
         </Row>
         <Row type="horizontal">
           <EditDriver />
-          <BlockDriver />
+          {status === "Blocked" ? <Unblock /> : <BlockDriver />}
         </Row>
       </Row>
 
       <Row>
         <DriverInformationWithImage
+          even={false}
           data={{
             userName: full_name,
             email: email,

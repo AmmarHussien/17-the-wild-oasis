@@ -4,27 +4,27 @@ import styled, { css } from "styled-components";
 
 const Status = styled.div`
   ${(props) =>
-    props.as === "Ongoing" &&
+    props.$status === "Ongoing" &&
     css`
       color: #fe9e46;
     `}
   ${(props) =>
-    props.as === "Completed" &&
+    props.$status === "Completed" &&
     css`
       color: #20c992;
     `}
   ${(props) =>
-    props.as === "Cancelled" &&
+    props.$status === "Cancelled" &&
     css`
       color: #fc5555;
     `}
 ${(props) =>
-    props.as === "Pending" &&
+    props.$status === "Pending" &&
     css`
       color: #fedf46;
     `}
 ${(props) =>
-    props.as === "Confirmed" &&
+    props.$status === "Confirmed" &&
     css`
       color: #1e48a3;
     `}
@@ -61,17 +61,7 @@ function UserRow({ userInfo }) {
         <div>
           {price} {currency}
         </div>
-        {status === "Pending" ? (
-          <Status as="Pending">{status}</Status>
-        ) : status === "Confirmed" ? (
-          <Status as="Confirmed">{status}</Status>
-        ) : status === "Cancelled" ? (
-          <Status as="Cancelled">{status}</Status>
-        ) : status === "Completed" ? (
-          <Status as="Completed">{status}</Status>
-        ) : status === "Ongoing" ? (
-          <Status as="Ongoing">{status}</Status>
-        ) : null}
+        <Status $status={status}>{status}</Status>
         <div>{rate}</div>
       </Table.Row>
     </Table>

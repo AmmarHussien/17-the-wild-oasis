@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
-import { getSearch } from "../../services/apiUsers";
+import { getSearch } from "../../services/apiDriver";
 
-function useSearchUsers(searchKey) {
+function useSearchDriver(searchKey) {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();
 
@@ -36,7 +36,7 @@ function useSearchUsers(searchKey) {
     error,
   } = useQuery({
     queryKey: [
-      "SearchUser",
+      "searchDrivers",
       filter,
       page,
       searchKey,
@@ -57,7 +57,7 @@ function useSearchUsers(searchKey) {
   if (page < pageCount) {
     queryClient.prefetchQuery({
       queryKey: [
-        "SearchUser",
+        "searchDrivers",
         filter,
         page + 1,
         searchKey,
@@ -81,7 +81,7 @@ function useSearchUsers(searchKey) {
   if (page > 1) {
     queryClient.prefetchQuery({
       queryKey: [
-        "SearchUser",
+        "searchDrivers",
         filter,
         page - 1,
         searchKey,
@@ -104,4 +104,4 @@ function useSearchUsers(searchKey) {
   return { isLoading, searchList, count, error };
 }
 
-export default useSearchUsers;
+export default useSearchDriver;

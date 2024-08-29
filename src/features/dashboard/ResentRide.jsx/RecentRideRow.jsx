@@ -3,27 +3,27 @@ import styled, { css } from "styled-components";
 
 const Status = styled.div`
   ${(props) =>
-    props.as === "Ongoing" &&
+    props.$status === "Ongoing" &&
     css`
       color: #fe9e46;
     `}
   ${(props) =>
-    props.as === "Completed" &&
+    props.$status === "Completed" &&
     css`
       color: #20c992;
     `}
-      ${(props) =>
-    props.as === "Cancelled" &&
+  ${(props) =>
+    props.$status === "Cancelled" &&
     css`
       color: #fc5555;
     `}
-    ${(props) =>
-    props.as === "Pending" &&
+  ${(props) =>
+    props.$status === "Pending" &&
     css`
       color: #fedf46;
     `}
-    ${(props) =>
-    props.as === "Confirmed" &&
+  ${(props) =>
+    props.$status === "Confirmed" &&
     css`
       color: #1e48a3;
     `}
@@ -73,17 +73,7 @@ function RideRow({ ride }) {
         <TableData>{ride.destination_address}</TableData>
         <p>{ride.created_at}</p>
         <p>{ride.price}</p>
-        {ride.status === "Pending" ? (
-          <Status as="Pending">{ride.status}</Status>
-        ) : ride.status === "Confirmed" ? (
-          <Status as="Confirmed">{ride.status}</Status>
-        ) : ride.status === "Cancelled" ? (
-          <Status as="Cancelled">{ride.status}</Status>
-        ) : ride.status === "Completed" ? (
-          <Status as="Completed">{ride.status}</Status>
-        ) : ride.status === "Ongoing" ? (
-          <Status as="Ongoing">{ride.status}</Status>
-        ) : null}
+        <Status $status={ride.status}>{ride.status}</Status>
       </Table.Row>
     </Table>
   );

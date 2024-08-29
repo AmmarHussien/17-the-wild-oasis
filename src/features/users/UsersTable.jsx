@@ -15,8 +15,8 @@ function UsersTable({ users, isLoading, userCount }) {
   const isBlocked = searchParams.get("status") === "Blocked";
 
   const columns = isBlocked
-    ? "0.4fr 1fr 1fr 1fr 1fr 1fr 1fr"
-    : "0.4fr 1fr 1fr 1fr 1fr 1fr";
+    ? "0.4fr 1fr 1fr 1.2fr 0.8fr 0.8fr 0.6fr 0.6fr"
+    : "0.4fr 1fr 1.2fr 0.8fr 0.8fr 0.6fr 0.6fr";
 
   return (
     <Table columns={columns}>
@@ -24,11 +24,12 @@ function UsersTable({ users, isLoading, userCount }) {
       <Table.Header>
         <div>Id</div>
         <div>Name</div>
+        {isBlocked && <div>Reason</div>}
         <div>Phone Number</div>
         <div>Email</div>
-        {isBlocked && <div>Reason</div>}
         <div>Number Of Rides</div>
         <div>Rate</div>
+        <div>Status</div>
       </Table.Header>
 
       <Table.Body

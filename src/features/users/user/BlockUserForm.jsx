@@ -44,9 +44,9 @@ export default function BlockUserForm() {
               message: "Reason should be at least 1 character",
             },
           })}
-          error={!!errors.reason}
-          helperText={errors.reason?.message}
-          sx={{
+          $error={!!errors.reason}
+          $helperText={errors.reason?.message}
+          $sx={{
             Padding: "12 24",
             gap: 4,
             borderRadius: 16,

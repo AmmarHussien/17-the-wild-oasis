@@ -6,7 +6,6 @@ const StyledFormRow = styled.div`
   justify-content: center;
   align-items: center;
   grid-template-columns: 24rem 1fr 1.2fr;
-
   padding: 1.2rem 0;
 
   &:first-child {
@@ -35,11 +34,11 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function FormRow({ error, children }) {
+function FormRow({ error, children, $sx }) {
   return (
-    <StyledFormRow>
+    <StyledFormRow $sx={$sx}>
       {children}
-      <Error>{error}</Error>
+      {error && <Error>{error}</Error>}
     </StyledFormRow>
   );
 }

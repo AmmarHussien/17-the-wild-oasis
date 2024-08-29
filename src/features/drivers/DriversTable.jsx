@@ -2,14 +2,11 @@ import { useSearchParams } from "react-router-dom";
 import Pagination from "../../ui/Pagination";
 import Table from "../../ui/Table";
 import DriversRow from "./DriversRow";
-import useDrivers from "./useDrivers";
 import Spinner from "../../ui/Spinner";
 import Empty from "../../ui/Empty";
 
-function DriversTable() {
+function DriversTable({ drivers, isLoading, driverCount }) {
   const [searchParams] = useSearchParams();
-
-  const { isLoading, drivers, count } = useDrivers();
 
   // Show the loading spinner while the data is being fetched
   if (isLoading) return <Spinner />;
@@ -22,20 +19,20 @@ function DriversTable() {
 
   // Set columns based on the status
   const columns = isBlocked
-    ? "0.8fr 0.8fr 1.4fr 1fr 1fr 1fr"
-    : "1fr 1fr 1fr 1fr 1fr";
+    ? "0.4fr 1fr 1fr  1fr 1fr 1fr"
+    : "0.4fr 1fr 1fr 1fr 1fr";
 
   return (
     <Table columns={columns}>
       <Table.TableNav title="Driver Table" tableData={drivers} />
 
       <Table.Header>
+        <div>ID</div>
         <div>Driver Name</div>
         {isBlocked && <div>Reason</div>}
-        <div>Personal License Expiry</div>
-        <div>Vehicle License Expiry</div>
         <div>Email</div>
         <div>Phone Number</div>
+        <div>Status</div>
       </Table.Header>
 
       <Table.Body
@@ -44,7 +41,7 @@ function DriversTable() {
       />
 
       <Table.Footer>
-        <Pagination count={count} />
+        <Pagination count={driverCount} />
       </Table.Footer>
     </Table>
   );

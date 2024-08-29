@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 const Row = styled.div`
@@ -16,6 +17,13 @@ const Row = styled.div`
       flex-direction: column;
       align-items: start;
     `}
+`;
+
+const View = styled.div`
+  flex: 1;
+  text-align: left;
+  font-weight: 600px;
+  color: #1447d4;
 `;
 
 const TableContainer = styled.div`
@@ -115,10 +123,19 @@ function UserInformationWithImage({ data, title }) {
                     )}
                   </Row>
                 </Row>
-              ) : (
+              ) : key !== "profileImage" ? (
                 <>
                   <Label>{key.replace(/([A-Z])/g, " $1")}</Label>
                   <Value>{value}</Value>
+                </>
+              ) : (
+                <>
+                  <Label>{key.replace(/([A-Z])/g, " $1")}</Label>
+                  <View>
+                    <Link to={value} target="_blank">
+                      View
+                    </Link>
+                  </View>
                 </>
               )}
             </RowItem>

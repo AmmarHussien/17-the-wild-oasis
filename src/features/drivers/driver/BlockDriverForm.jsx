@@ -2,103 +2,51 @@ import Input from "../../../ui/Input";
 import Form from "../../../ui/Form";
 import { useForm } from "react-hook-form";
 import FormRow from "../../../ui/FormRow";
-import { useCreateCabin } from "../../cabins/useCreateCabin";
-import useEditCabin from "../../cabins/useEditCabin";
-import styled from "styled-components";
 import { Button } from "@mui/material";
-import DropDownMenu from "../../../ui/DropDownMenu";
+import { useNavigate } from "react-router-dom";
+import useUpdateStatus from "./useUpdateStatus";
 
-function BlockDriverForm({ cabinToEdit = {}, onCloseModal }) {
-  const Title = styled.p`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `;
+export default function BlockDriverForm() {
+  const navigate = useNavigate();
 
-  const { id: editId, ...editValue } = cabinToEdit;
+  const { editStatus } = useUpdateStatus();
 
-  const isEditSession = Boolean(editId);
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
 
-  const { register, handleSubmit, reset, formState } = useForm({
-    defaultValues: isEditSession ? editValue : {},
-  });
-
-  const { errors } = formState;
-
-  const { isCreating, createCabin } = useCreateCabin();
-
-  const { isEditing, editCabin } = useEditCabin();
-
-  const isWorking = isCreating || isEditing;
-
-  const options = [
-    { key: 1, name: "Option 1" },
-    { key: 2, name: "Option 2" },
-    { key: 3, name: "Option 3" },
-  ];
-
-  function onSubmit(data) {
-    const image = typeof data.image === "string" ? data.image : data.image[0];
-
-    if (isEditSession)
-      editCabin(
-        { newCabinData: { ...data, image }, id: editId },
-        {
-          onSuccess: (data) => {
-            reset();
-            onCloseModal?.();
-          },
-        }
-      );
-    else
-      createCabin(
-        { ...data, image: image },
-        {
-          onSuccess: (data) => {
-            reset();
-            onCloseModal?.();
-          },
-        }
-      );
-  }
-
-  function onError(errors) {
-    //console.log(errors);
+  function handleFormSubmit(data) {
+    editStatus(
+      { status: "Blocked", reason: data.reason },
+      {
+        onSuccess: () => {
+          // Call editStatus or perform any other actions
+          navigate(`/drivers?status=Blocked`, {
+            replace: true,
+          });
+        },
+      }
+    );
   }
 
   return (
-    <Form
-      onSubmit={handleSubmit(onSubmit, onError)}
-      type={onCloseModal ? "model" : "regular"}
-    >
-      <Title>Please complete filling these data</Title>
-
-      <FormRow error={errors?.name?.message}>
-        <DropDownMenu title="options" options={options} />
-      </FormRow>
-
-      <FormRow error={errors?.reason?.message}>
+    <Form onSubmit={handleSubmit(handleFormSubmit)}>
+      <FormRow label="Description">
         <Input
-          placeholder="reason"
+          placeholder="Reason"
           type="text"
-          id="text"
-          {...register("text", {
-            required: "This Field is required",
-            min: {
+          {...register("reason", {
+            required: "This field is required",
+            minLength: {
               value: 1,
-              message: "Reason should be at least 1",
+              message: "Reason should be at least 1 character",
             },
           })}
-        />
-      </FormRow>
-
-      <FormRow>
-        <Button
-          variant="contained"
-          //startIcon={<AddIcon />}
-          sx={{
-            width: 327,
-            height: 56,
+          $error={!!errors.reason}
+          $helperText={errors.reason?.message}
+          $sx={{
             Padding: "12 24",
             gap: 4,
             borderRadius: 16,
@@ -106,12 +54,26 @@ function BlockDriverForm({ cabinToEdit = {}, onCloseModal }) {
             background: "#005379",
             shadow: "0 4 60 0 #0038FF26",
           }}
-        >
-          Submit
-        </Button>
+        />
       </FormRow>
+
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{
+          width: 327,
+          height: 56,
+          Padding: "12 24",
+          gap: 4,
+          borderRadius: 16,
+          fontSize: 16,
+          background: "#005379",
+          shadow: "0 4 60 0 #0038FF26",
+          display: "flex",
+        }}
+      >
+        Submit
+      </Button>
     </Form>
   );
 }
-
-export default BlockDriverForm;

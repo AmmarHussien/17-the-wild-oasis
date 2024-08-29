@@ -79,8 +79,6 @@ function SalesChart() {
     format(currentMonth, "MM")
   );
 
-  console.log("SalesChart", revenues);
-
   // Calculate the start and end dates for the current month
   const startOfCurrentMonth = startOfMonth(currentMonth);
   const endOfCurrentMonth = endOfMonth(currentMonth);
@@ -120,9 +118,7 @@ function SalesChart() {
     year: "numeric",
   });
 
-  useEffect(() => {
-    console.log(currentMonth);
-  }, [currentMonth]);
+  useEffect(() => {}, [currentMonth]);
 
   const data = allDates
     .filter(
@@ -187,7 +183,7 @@ function SalesChart() {
               fontSize: "50px",
             }}
           />
-          <Heading as="h7"> {monthName} </Heading>
+          <Heading as="h2"> {monthName} </Heading>
           <ChevronRightIcon
             onClick={handleNextMonth}
             sx={{
@@ -204,7 +200,6 @@ function SalesChart() {
             tickLine={{ stroke: colors.text }}
           />
           <YAxis
-            unit="$"
             tick={{ fill: colors.text }}
             tickLine={{ stroke: colors.text }}
           />

@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useUpdateStatus from "./useUpdateStatus";
 
-function AcceptDriver() {
+function Unblock() {
   const navigate = useNavigate();
 
   const { editStatus } = useUpdateStatus();
@@ -15,6 +15,7 @@ function AcceptDriver() {
       replace: true,
     });
   }
+
   return (
     <div>
       <Button
@@ -29,10 +30,10 @@ function AcceptDriver() {
           shadow: "0 4 60 0 #0038FF26",
         }}
       >
-        Accept
+        Unblock
       </Button>
     </div>
   );
 }
 
-export default AcceptDriver;
+export default Unblock;

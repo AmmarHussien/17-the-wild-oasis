@@ -44,7 +44,8 @@ const RowItem = styled.div`
   justify-content: space-between;
   padding: 10px;
   border-bottom: 1px solid #ddd;
-  background-color: ${(props) => (props.even ? "#f1f1f1" : "#f9f9f9")};
+
+  background-color: ${(props) => (props.$even ? "#f1f1f1" : "#f9f9f9")};
 `;
 const Label = styled.div`
   flex: 1;
@@ -100,7 +101,7 @@ function DriverInformationWithImage({ data, title }) {
         {Object.entries(data).map(([key, value], index, array) => {
           if (key === "email") return null;
           return (
-            <RowItem key={key} even={index % 2 === 1}>
+            <RowItem key={key} $even={index % 2 === 1}>
               {key === "userName" &&
               key !== "nationalId" &&
               key !== "driverIicense" &&

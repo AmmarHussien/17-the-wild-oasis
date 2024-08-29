@@ -14,6 +14,7 @@ const StyledModal = styled.div`
   box-shadow: var(--shadow-lg);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
+  z-index: 1001;
 `;
 
 const Overlay = styled.div`
@@ -46,9 +47,6 @@ const Button = styled.button`
   & svg {
     width: 2.4rem;
     height: 2.4rem;
-    /* Sometimes we need both */
-    /* fill: var(--color-grey-500);
-    stroke: var(--color-grey-500); */
     color: var(--color-grey-500);
   }
 `;
@@ -83,7 +81,11 @@ function Window({ children, name }) {
 
   return createPortal(
     <Overlay>
-      <StyledModal ref={ref}>
+      <StyledModal
+        ref={ref}
+        aria-labelledby={`${name}-title`}
+        aria-describedby={`${name}-description`}
+      >
         <Button onClick={close}>
           <HiXMark />
         </Button>

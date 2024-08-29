@@ -48,7 +48,6 @@ export async function getAllUsers({ filter, page, sortBy, sortType, perPage }) {
     );
   }
 }
-// /dashboard-api/v1/users?search_key=ALaa Ragab&status=Approved
 
 export async function getSearch({
   filter,
@@ -141,8 +140,6 @@ export async function addNewUser(formData) {
 
 export async function editUser(id, formData) {
   const token = localStorage.getItem("authToken");
-  console.log("Editing user with ID:", id);
-  console.log("Editing user with ID:", formData);
 
   try {
     const response = await axios.put(`${URL}users/${id}`, formData, {
@@ -161,7 +158,7 @@ export async function editUser(id, formData) {
   }
 }
 
-export async function updateStatus(id, reason, status) {
+export async function updateUserStatus(id, reason, status) {
   const token = localStorage.getItem("authToken");
   try {
     const response = await axios.put(

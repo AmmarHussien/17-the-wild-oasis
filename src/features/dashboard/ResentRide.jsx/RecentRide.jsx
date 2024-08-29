@@ -10,7 +10,7 @@ function RecentRide() {
   return (
     <Menus>
       <Table columns="0.4fr 1fr 1.6fr 1.6fr 1.2fr 0.8fr 0.5fr">
-        <Table.TableNaView title="Recent Ride" />
+        <Table.TableNaView title="Recent Rides" />
         <Table.Header>
           <div>ID</div>
           <div>Rider Name</div>
@@ -27,7 +27,8 @@ function RecentRide() {
         />
 
         <Table.Footer>
-          <Pagination count={statistics.rides.length} />
+          <p>Summary of Last 10 Rides</p>
+          {/* <Pagination count={statistics.rides.length} /> */}
         </Table.Footer>
       </Table>
     </Menus>

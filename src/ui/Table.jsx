@@ -14,7 +14,7 @@ const StyledTable = styled.div`
 
 const CommonRow = styled.div`
   display: grid;
-  grid-template-columns: ${(props) => props.columns};
+  grid-template-columns: ${(props) => props.$columns}; /* Updated */
   column-gap: 2.4rem;
   align-items: center;
   transition: none;
@@ -22,7 +22,6 @@ const CommonRow = styled.div`
 
 const StyledHeader = styled(CommonRow)`
   padding: 1.6rem 2.4rem;
-
   background-color: var(--color-grey-50);
   border-bottom: 1px solid var(--color-grey-100);
   text-transform: uppercase;
@@ -137,7 +136,9 @@ function TableNav({ title, tableData }) {
 function Header({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledHeader role="row" columns={columns} as="header">
+    <StyledHeader role="row" $columns={columns} as="header">
+      {" "}
+      {/* Updated */}
       {children}
     </StyledHeader>
   );
@@ -146,7 +147,9 @@ function Header({ children }) {
 function Row({ children }) {
   const { columns } = useContext(TableContext);
   return (
-    <StyledRow role="row" columns={columns}>
+    <StyledRow role="row" $columns={columns}>
+      {" "}
+      {/* Updated */}
       {children}
     </StyledRow>
   );

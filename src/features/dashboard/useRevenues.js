@@ -6,7 +6,6 @@ function useRevenues(year, month) {
     queryKey: ["Revenues", year, month],
     queryFn: async () => {
       const response = await getRevenues(year, month);
-      console.log("API Response:", response);
       return response;
     },
     enabled: !!year && !!month,

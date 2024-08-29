@@ -55,6 +55,7 @@ function UserInformation() {
     balance,
     status,
     currency,
+    profile_image,
     car: {
       manufacture: { manufacture },
       model: { model },
@@ -83,6 +84,7 @@ function UserInformation() {
             email: email,
             MobileNumber: phone,
             JoiningDate: created_at,
+            profileImage: profile_image,
           }}
           title="User's Info"
         />

@@ -7,7 +7,7 @@ function useDriver(id) {
     data: driverData = {}, // Ensure default object
     error,
   } = useQuery({
-    queryKey: ["driver", id],
+    queryKey: ["DriverInfo", id],
     queryFn: () => getDriver(id),
   });
   return { isLoading, driverData, error };

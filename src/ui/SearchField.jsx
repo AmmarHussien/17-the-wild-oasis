@@ -3,14 +3,24 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import { useState } from "react";
 
 const SearchField = ({ searchTerm, setSearchTerm }) => {
+  const [inputValue, setInputValue] = useState("");
+
   const handleOnChange = (event) => {
-    setSearchTerm(event.target.value);
+    setInputValue(event.target.value);
   };
 
   const handleSearch = () => {
-    console.log("Searching for:", searchTerm);
+    setSearchTerm(inputValue);
+    // Perform search action here
+    //console.log("Searching for:", inputValue);
+  };
+
+  const handleReset = () => {
+    setInputValue("");
+    setSearchTerm("");
   };
 
   const handleKeyPress = (event) => {
@@ -19,17 +29,13 @@ const SearchField = ({ searchTerm, setSearchTerm }) => {
     }
   };
 
-  const handleReset = () => {
-    setSearchTerm("");
-  };
-
   return (
     <TextField
       placeholder="Search"
       type="text"
       id="search"
       autoComplete="search"
-      value={searchTerm}
+      value={inputValue}
       onChange={handleOnChange}
       onKeyPress={handleKeyPress}
       InputProps={{

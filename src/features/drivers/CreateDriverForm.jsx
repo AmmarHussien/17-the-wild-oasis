@@ -8,6 +8,7 @@ import Input from "../../ui/Input";
 import { useAddDrive } from "./useAddDriver";
 import FormRow from "../../ui/FormRow";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Using FontAwesome icons
+import Textarea from "../../ui/Textarea";
 
 function CreateDriverForm({ onCloseModal }) {
   const { register, handleSubmit, setValue, reset, formState, watch } =
@@ -48,7 +49,7 @@ function CreateDriverForm({ onCloseModal }) {
     formData.append("email", data.email);
     formData.append("phone", data.phoneNumber);
     formData.append("password", data.password);
-    formData.append("country_code", "+02");
+    formData.append("country_code", "+20");
     formData.append("password_confirmation", data.confirmPassword);
     formData.append("profile_image", profileImage);
     formData.append("driver_license", driverLicense);
@@ -57,6 +58,7 @@ function CreateDriverForm({ onCloseModal }) {
     formData.append("criminal_record", criminalRecord);
     formData.append("national_id", nationalId);
     formData.append("tow_truck_registration", towTruckRegistration);
+    formData.append("car_spec", data.carSpec);
 
     addDriver(formData, {
       onSuccess: () => {
@@ -91,9 +93,13 @@ function CreateDriverForm({ onCloseModal }) {
           id="firstName"
           placeholder="First Name"
           {...register("firstName", {
+            minLength: {
+              value: 3,
+              message: "First Name must be at least 3 characters",
+            },
             required: "First Name is required",
           })}
-          sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+          $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
         />
       </FormRowVertical>
       <FormRowVertical error={errors?.lastName?.message}>
@@ -108,7 +114,7 @@ function CreateDriverForm({ onCloseModal }) {
               message: "Last Name must be at least 3 characters",
             },
           })}
-          sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+          $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
         />
       </FormRowVertical>
       <FormRowVertical error={errors?.phoneNumber?.message}>
@@ -123,7 +129,7 @@ function CreateDriverForm({ onCloseModal }) {
               message: "Phone Number must be numeric",
             },
           })}
-          sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+          $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
         />
       </FormRowVertical>
       <FormRowVertical error={errors?.email?.message}>
@@ -131,6 +137,7 @@ function CreateDriverForm({ onCloseModal }) {
           placeholder="Email"
           type="email"
           id="email"
+          autoComplete="username"
           {...register("email", {
             required: "Email is required",
             pattern: {
@@ -138,7 +145,7 @@ function CreateDriverForm({ onCloseModal }) {
               message: "Please enter a valid email address",
             },
           })}
-          sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+          $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
         />
       </FormRowVertical>
       <FormRowVertical error={errors?.password?.message}>
@@ -147,6 +154,7 @@ function CreateDriverForm({ onCloseModal }) {
             placeholder="Password"
             type={showPassword ? "text" : "password"}
             id="password"
+            autoComplete="new-password"
             {...register("password", {
               required: "Password is required",
               minLength: {
@@ -164,7 +172,7 @@ function CreateDriverForm({ onCloseModal }) {
                   "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
               },
             })}
-            sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+            $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
           />
           <span
             onClick={handleTogglePassword}
@@ -186,12 +194,13 @@ function CreateDriverForm({ onCloseModal }) {
             placeholder="Confirm Password"
             type={showConfirmPassword ? "text" : "password"}
             id="confirmPassword"
+            autoComplete="new-password"
             {...register("confirmPassword", {
               required: "Please confirm your password",
               validate: (value) =>
                 value === password || "Passwords do not match",
             })}
-            sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+            $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
           />
           <span
             onClick={handleToggleConfirmPassword}
@@ -207,7 +216,6 @@ function CreateDriverForm({ onCloseModal }) {
           </span>
         </div>
       </FormRowVertical>
-
       <FormRowVertical>
         <FileInput
           placeholder="National Id"
@@ -224,7 +232,7 @@ function CreateDriverForm({ onCloseModal }) {
       </FormRowVertical>
       <FormRowVertical>
         <FileInput
-          placeholder="License Photo"
+          placeholder="Driver License Photo"
           id="driverLicense"
           onFileChange={handleFileChange(setDriverLicense)}
         />
@@ -255,6 +263,20 @@ function CreateDriverForm({ onCloseModal }) {
           placeholder="Tow Truck Registration"
           id="towTruckRegistration"
           onFileChange={handleFileChange(setTowTruckRegistration)}
+        />
+      </FormRowVertical>
+      <FormRowVertical error={errors?.carSpec?.message}>
+        <Textarea
+          type="text"
+          id="carSpec"
+          placeholder="Car Spec"
+          {...register("carSpec", {
+            maxLength: {
+              value: 180,
+              message: "Car Spec must be at Most 180 characters",
+            },
+          })}
+          $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
         />
       </FormRowVertical>
 

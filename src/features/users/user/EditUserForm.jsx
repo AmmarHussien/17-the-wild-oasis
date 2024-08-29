@@ -1,6 +1,6 @@
 import Input from "../../../ui/Input";
 import Form from "../../../ui/Form";
-import Button from "../../../ui/Button";
+import { Button } from "@mui/material";
 import FileInput from "../../../ui/FileInput";
 import { useForm } from "react-hook-form";
 import FormRow from "../../../ui/FormRow";
@@ -28,6 +28,7 @@ function EditUserForm({ onCloseModal }) {
       model: { id: modelId },
       registration_year,
     },
+    profile_image,
   } = userInfo;
 
   const {
@@ -52,7 +53,7 @@ function EditUserForm({ onCloseModal }) {
   const [profileImage, setProfileImage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { isLoading, manufactures = [] } = useManufactures();
+  const { manufactures = [] } = useManufactures();
   const [selectedBrand, setSelectedBrand] = useState(manufactureId);
   const [selectedModel, setSelectedModel] = useState(modelId);
   const { models } = useModel(selectedBrand);
@@ -85,7 +86,7 @@ function EditUserForm({ onCloseModal }) {
 
   const handleFileChange = (setFileState) => async (file) => {
     setFileState(file);
-    setValue(file.name, file);
+    //setValue(file.name, file);
 
     const uploadData = new FormData();
     uploadData.append("file", file);
@@ -102,8 +103,9 @@ function EditUserForm({ onCloseModal }) {
   useEffect(() => {
     if (profileImage) {
       // This runs every time profileImage changes
+      setValue("profile_image", profileImage.path);
     }
-  }, [profileImage]);
+  }, [profileImage, setValue]);
 
   const onSubmit = async (data) => {
     try {
@@ -180,7 +182,7 @@ function EditUserForm({ onCloseModal }) {
           {...register("first_name", {
             required: "First Name is required",
           })}
-          sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+          $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
         />
       </FormRowVertical>
       <FormRowVertical error={errors?.last_name?.message}>
@@ -197,7 +199,7 @@ function EditUserForm({ onCloseModal }) {
               message: "Last Name must be at least 3 characters",
             },
           })}
-          sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+          $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
         />
       </FormRowVertical>
       <FormRowVertical error={errors?.phoneNumber?.message}>
@@ -207,7 +209,7 @@ function EditUserForm({ onCloseModal }) {
           id="phoneNumber"
           defaultValue={phoneNumber}
           disabled={true}
-          sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+          $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
         />
       </FormRowVertical>
       <FormRowVertical error={errors?.email?.message}>
@@ -225,7 +227,7 @@ function EditUserForm({ onCloseModal }) {
               message: "Please enter a valid email address",
             },
           })}
-          sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+          $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
         />
       </FormRowVertical>
       <FormRowVertical error={errors?.password?.message}>
@@ -237,7 +239,7 @@ function EditUserForm({ onCloseModal }) {
             autoComplete="new-password"
             defaultValue="##########"
             disabled={true}
-            sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+            $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
           />
           <span
             onClick={handleTogglePassword}
@@ -262,7 +264,7 @@ function EditUserForm({ onCloseModal }) {
             autoComplete="new-password"
             defaultValue="##########"
             disabled={true}
-            sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+            $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
           />
           <span
             onClick={handleToggleConfirmPassword}
@@ -284,6 +286,7 @@ function EditUserForm({ onCloseModal }) {
           placeholder="User Photo (optional)"
           id="UserPhoto"
           onFileChange={handleFileChange(setProfileImage)}
+          defaultValue={profile_image}
         />
       </FormRowVertical>
 
@@ -326,12 +329,23 @@ function EditUserForm({ onCloseModal }) {
             validate: (value) =>
               Number.isInteger(value) || "Registration year must be an integer",
           })}
-          sx={{ backgroundColor: "rgb(247, 248, 250)" }}
+          $sx={{ backgroundColor: "rgb(247, 248, 250)" }}
         />
       </FormRowVertical>
 
       <FormRow>
-        <Button disabled={isEditing || isLoading} size="xlarge">
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{
+            width: 139,
+            height: 56,
+            borderRadius: 5,
+            fontSize: 16,
+            background: "#005379",
+            boxShadow: "0 4px 60px 0 rgba(0, 56, 255, 0.15)", // Updated shadow property
+          }}
+        >
           Submit
         </Button>
       </FormRow>
